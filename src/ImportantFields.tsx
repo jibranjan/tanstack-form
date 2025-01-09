@@ -66,15 +66,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             <form.Field
                 className="flex flex-col gap-5"
                 name="jobTitle"
-                validators={{
-                    onChangeAsyncDebounceMs: 500,
-                    onChangeAsync: ({ value }: any) =>
-                        value.length < 3
-                            ? 'Job title must be at least 3 characters'
-                            : undefined,
-                }}
                 children={(field: any) => {
-                    // const { isTouched, isPristine, isDirty } = field.state.meta
                     return (
                         <>
                             <label className="text-sm text-gray-700 mt-7 eqp-required-field">Job Title</label>
@@ -84,13 +76,11 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value)
-                                    console.log(field.state.errors)
                                 }}
                                 type="text"
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
                                 placeholder="Ex. Software Engineer"
                             />
-                            {field.state.meta.errors.length > 0 && <p className="text-red-500 text-xs">{field.state.meta.errors[0]}</p>}
                         </>
                     )
                 }}
@@ -108,133 +98,81 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         <form.Field
                             key={option.id}
                             name="roleType"
-                            children={(field: any) => (
-                                <span className="flex items-center gap-1.5">
-                                    <input
-                                        id={option.id}
-                                        className="w-4 h-4 accent-blue-900"
-                                        type="radio"
-                                        name={field.name}
-                                        value={option.label}
-                                        checked={field.state.value === option.label}
-                                        onChange={(e) => field.handleChange(e.target.value)}
-                                    />
-                                    <label htmlFor={option.id} className="text-sm font-light text-gray-700">
-                                        {option.label}
-                                    </label>
-                                </span>
-                            )}
+                            children={(field: any) => {
+                                return(
+                                    <span className="flex items-center gap-1.5">
+                                        <input
+                                            id={option.id}
+                                            className="w-4 h-4 accent-blue-900"
+                                            type="radio"
+                                            name={field.name}
+                                            value={option.label}
+                                            checked={field.state.value === option.label}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                        />
+                                        <label htmlFor={option.id} className="text-sm font-light text-gray-700">
+                                            {option.label}
+                                        </label>
+                                    </span>
+                                )
+                            }}
                         />
                     ))}
                 </div>
             </div>
 
             {/* Location */}
-            <form.Field
-                name="locations"
-                children={(field: any) => {
-                    const countries = [
-                        { name: "United States" },
-                        { name: "Canada" },
-                        { name: "United Kingdom" }
-                    ];
-                    const cities = [
-                        { name: "New York" },
-                        { name: "Toronto" },
-                        { name: "London" }
-                    ];
-                    return (
-                        <div id="locations-container">
-                            <label className="text-sm text-gray-700 eqp-required-field">
-                                Location(s)
-                            </label>
-
-                            {field.state.value.map((location: any, index: number) => (
-                                <div key={index} className="country-section mb-4">
-                                    <select
-                                        className="job-location-select text-sm mt-1 font-light text-gray-500 ring-1 ring-gray-300 w-full py-2 px-3 rounded-lg border-r-8 border-r-transparent"
-                                        value={location.country}
+            <div className="mt-3">
+                <span className="text-sm text-gray-700 eqp-required-field">Location(s)</span>
+                <div>
+                    <form.Field
+                        name="location"
+                        children={(field: any) => {
+                            return(
+                                <div>
+                                    <select 
+                                        value={field.state.value}
+                                        defaultValue=""
+                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                                         onChange={(e) => {
-                                            const newLocations = [...field.state.value];
-                                            newLocations[index].country = e.target.value;
-                                            field.handleChange(newLocations);
+                                            field.handleChange(e.target.value)
+                                            // TODO: Add city selection
                                         }}
                                     >
                                         <option value="" disabled>Select Country</option>
-                                        {countries.map((country) => (
-                                            <option key={country.name} value={country.name}>
-                                                {country.name}
-                                            </option>
-                                        ))}
+                                        <option value="United States">United States</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="United Kingdom">United Kingdom</option>
                                     </select>
 
-                                    <div className="flex items-center gap-2 mt-2">
-                                        <div className="selected-cities-ctr flex flex-wrap gap-2">
-                                            {location.cities.map((city: string, cityIndex: number) => (
-                                                <div key={cityIndex} className="flex items-center gap-2 bg-blue-50 text-blue-900 px-3 py-1.5 rounded-full text-xs border border-blue-200">
-                                                    <span>{city}</span>
-                                                    <button
-                                                        type="button"
-                                                        className="hover:text-blue-700 focus:outline-none"
-                                                        onClick={() => {
-                                                            const newLocations = [...field.state.value];
-                                                            newLocations[index].cities = newLocations[index].cities.filter((_, i) => i !== cityIndex);
-                                                            field.handleChange(newLocations);
+                                    {field.state.value && (
+                                        <form.Field
+                                            name="city"
+                                            children={(field: any) => {
+                                                return(
+                                                    <select 
+                                                        value={field.state.value}
+                                                        defaultValue=""
+                                                        className="text-sm mt-1.5 font-light text-gray-700 w-20 outline-none"
+                                                        onChange={(e) => {
+                                                            field.handleChange(e.target.value)
                                                         }}
                                                     >
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                                                        </svg>
-                                                    </button>
-                                                </div>
-                                            ))}
-
-                                            <select
-                                                className="job-location-city text-sm mt-1 font-light text-gray-700 w-20 outline-none"
-                                                value=""
-                                                onChange={(e) => {
-                                                    if (e.target.value) {
-                                                        const newLocations = [...field.state.value];
-                                                        newLocations[index].cities.push(e.target.value);
-                                                        field.handleChange(newLocations);
-                                                        e.target.value = "";
-                                                    }
-                                                }}
-                                            >
-                                                <option value="" disabled>Add City</option>
-                                                {cities
-                                                    .filter((city) => !location.cities.includes(city.name))
-                                                    .map((city) => (
-                                                        <option key={city.name} value={city.name}>
-                                                            {city.name}
-                                                        </option>
-                                                    ))}
-                                            </select>
-                                        </div>
-                                    </div>
+                                                        <option value="" disabled>Add City</option>
+                                                        <option value="Srinagar">Srinagar</option>
+                                                        <option value="Toronto">Toronto</option>
+                                                        <option value="London">London</option>
+                                                    </select>
+                                                )
+                                            }}
+                                        />
+                                    )}
                                 </div>
-                            ))}
-
-                            <div
-                                className="flex items-center gap-1.5 mt-2 cursor-pointer"
-                                onClick={() => {
-                                    field.handleChange([
-                                        ...field.state.value,
-                                        { country: "", cities: [] }
-                                    ]);
-                                }}
-                            >
-                                <svg className="w-5 h-5 text-blue-600 stroke-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                                </svg>
-                                <span className="text-sm text-blue-600">Add Country</span>
-                            </div>
-                        </div>
-                    )
-                }}
-            />
-
-
+                            )
+                        }}
+                    />
+                </div>
+            </div>
         </section>
     );
 }
