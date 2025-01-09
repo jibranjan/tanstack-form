@@ -299,7 +299,8 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
         <button
           disabled={locations.some((loc) => loc === "")}
-          className="text-sm text-blue-500 mt-2 block"
+          title={locations.some((loc) => loc === "") ? "Please add at least one country" : ""}
+          className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : ""}`}
           onClick={(e) => {
             e.preventDefault();
             setLocations((prev) => [...prev, ""]);
