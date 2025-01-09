@@ -6,7 +6,7 @@ function Form() {
         defaultValues: {
             jdUpload: '',
             jobTitle: '',
-            roleType: '',
+            roleType: 'On-site',
             locations: [{ country: '', cities: [] }],
             jobType: '',
             experience: { min: 0, max: 0 },
