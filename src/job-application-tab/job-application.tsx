@@ -4,6 +4,14 @@ interface JobApplicationProps {
     form: any;
 }
 
+interface FieldType {
+    id: string;
+    name: string;
+    isMandatory: boolean;
+    section: 'important' | 'other';
+    allowChange?: boolean;
+}
+
 function JobApplication({ form }: JobApplicationProps) {
     const applicationOptions = [
         {
@@ -23,63 +31,81 @@ function JobApplication({ form }: JobApplicationProps) {
         { id: 'first-name', name: 'First name', isMandatory: true, section: 'important' },
         { id: 'last-name', name: 'Last name', isMandatory: true, section: 'important' },
         { id: 'email', name: 'Email', isMandatory: true, section: 'important' },
-        { id: 'location', name: 'Location', isMandatory: false, section: 'important' },
-        { id: 'dob', name: 'DOB', isMandatory: false, section: 'important' },
+        { id: 'location', name: 'Location', isMandatory: false, section: 'important', allowChange: true },
+        { id: 'dob', name: 'DOB', isMandatory: false, section: 'important', allowChange: true },
         
         // Other Fields
         { id: 'skills', name: 'Skills', isMandatory: true, section: 'other' },
         { id: 'current-salary', name: 'Current salary', isMandatory: true, section: 'other' },
-        { id: 'expected-salary', name: 'Expected salary', isMandatory: false, section: 'other' },
-        { id: 'notice-period', name: 'Notice period', isMandatory: false, section: 'other' },
+        { id: 'expected-salary', name: 'Expected salary', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'notice-period', name: 'Notice period', isMandatory: false, section: 'other', allowChange: true },
     ]);
 
     const renderFieldSection = (section: 'important' | 'other') => {
         return (
             <div className="grid grid-cols-2 gap-x-5 gap-y-2 p-2">
-                {fields.filter((fld) => fld.section === section).map((fld) => (
-                    <div className="flex items-center justify-between gap-2 col-span-1">
-                        <form.Field
-                            name={`${section}-field-${fld.id}`}
-                            children={(field: any) => {
-                                return (
-                                    <label key={fld.id} htmlFor={`${fld.id}-checkbox`} className="text-sm text-gray-700 font-light flex items-center gap-2">
-                                        <input 
-                                            id={`${fld.id}-checkbox`}
-                                            className="w-3.5 h-3.5 accent-blue-900 mt-0.5 rounded-sm" 
-                                            type="checkbox" 
-                                            name={`${fld.id}-checkbox`}
-                                            defaultChecked={fld.isMandatory}
-                                            disabled={fld.isMandatory}
-                                            onBlur={field.handleBlur}
-                                            onChange={(e) => field.handleChange(e.target.value)}
-                                        />
-                                        {fld.name}
-                                    </label>
-                                )
-                            }}
-                        />
-                        <form.Field
-                            name={`${section}-field-${fld.id}`}
-                            children={(field: any) => {
-                                return (
-                                    <label htmlFor={`${fld.id}-mandatory`} className="relative inline-flex items-center">
-                                        <input
-                                            id={`${fld.id}-mandatory`}
-                                            type="checkbox"
-                                            name={`${fld.id}-mandatory`}
-                                            className="sr-only peer"
-                                            defaultChecked={fld.isMandatory}
-                                            disabled={fld.isMandatory}
-                                            onBlur={field.handleBlur}
-                                            onChange={(e) => field.handleChange(e.target.value)}
-                                    />
-                                    <div className="cursor-pointer w-7 h-3.5 bg-gray-400 outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:absolute after:top-[1px] after:left-[2px] after:text-[10px] after:flex after:items-center after:justify-center after:text-emerald-500 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500 peer-disabled:bg-gray-200"></div>
-                                </label>
-                                )
-                            }}
-                        />
-                    </div>
-                ))}
+                {fields.filter((fld) => fld.section === section).map((fld) => {
+                    const selectionFieldName = `${section}-field-${fld.id}-selection`;
+                    const mandatoryFieldName = `${section}-field-${fld.id}-mandatory`;
+                    return (
+                        <div key={fld.id} className="flex items-center justify-between gap-2 col-span-1">
+                            <form.Field
+                                name={selectionFieldName}
+                                defaultValue={fld.isMandatory}
+                                children={(field: any) => {
+                                    return (
+                                        <label 
+                                            htmlFor={`${fld.id}-checkbox`} 
+                                            className="text-sm text-gray-700 font-light flex items-center gap-2"
+                                        >
+                                            <input 
+                                                id={`${fld.id}-checkbox`}
+                                                className="w-3.5 h-3.5 accent-blue-900 mt-0.5 rounded-sm" 
+                                                type="checkbox" 
+                                                checked={field.state.value || form.getFieldValue(mandatoryFieldName)}
+                                                disabled={!fld.allowChange || form.getFieldValue(mandatoryFieldName)}
+                                                onBlur={field.handleBlur}
+                                                onChange={(e) => field.handleChange(e.target.checked)}
+                                            />
+                                            {fld.name}
+                                        </label>
+                                    )
+                                }}
+                            />
+                            <form.Field
+                                name={mandatoryFieldName}
+                                defaultValue={fld.isMandatory}
+                                children={(field: any) => {
+                                    return (
+                                        <label 
+                                            htmlFor={`${fld.id}-mandatory`} 
+                                            title="Mark as mandatory"
+                                            className="relative inline-flex items-center"
+                                        >
+                                            <input
+                                                id={`${fld.id}-mandatory`}
+                                                type="checkbox"
+                                                className="sr-only peer"
+                                                checked={field.state.value}
+                                                disabled={!fld.allowChange}
+                                                onBlur={field.handleBlur}
+                                                onChange={(e) => {
+                                                    field.handleChange(e.target.checked);
+                                                    // If mandatory is checked, ensure selection is also checked
+                                                    if (e.target.checked) {
+                                                        form.setFieldValue(selectionFieldName, true);
+                                                        setFields((prevFields) => prevFields.map((prevField) => prevField.id === fld.id ? { ...fld, isMandatory: true } : prevField));
+                                                    }
+                                                }}
+                                            />
+                                            <div className="cursor-pointer w-7 h-3.5 bg-gray-400 outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:absolute after:top-[1px] after:left-[2px] after:text-[10px] after:flex after:items-center after:justify-center after:text-emerald-500 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-emerald-500 peer-disabled:bg-gray-200"></div>
+                                        </label>
+                                    )
+                                }}
+                            />
+                        </div>
+                    )
+                })}
             </div>
         )
     };
