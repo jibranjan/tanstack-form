@@ -1,5 +1,5 @@
 import { useState } from "react";
-import FormHeading from "./FormHeading.tsx";
+import FormHeading from "../FormHeading.tsx";
 
 interface ImportantFieldsProps {
     form: any;

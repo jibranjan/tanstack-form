@@ -1,6 +1,6 @@
 import { useForm } from "@tanstack/react-form"
-import ImportantFields from "./ImportantFields.tsx"
-import OtherFields from "./OtherFields.tsx"
+import ImportantFields from "./job-description-tab/ImportantFields.tsx"
+import OtherFields from "./job-description-tab/OtherFields.tsx"
 
 function Form() {
     const form = useForm({
