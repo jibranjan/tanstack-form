@@ -1,22 +1,14 @@
 import { useForm } from "@tanstack/react-form"
 import ImportantFields from "./ImportantFields.tsx"
+import OtherFields from "./OtherFields.tsx"
 
 function Form() {
     const form = useForm({
         defaultValues: {
-            jdUpload: '',
-            jobTitle: '',
             roleType: 'On-site',
-            locations: [{ country: '', cities: [] }], // rn in forms.tsx i am not using an object for locations, will have to change it
-            jobType: '',
-            experience: { min: 0, max: 0 },
-            skills: [],
-            jobDescription: '',
-            salary: { currency: 'usd', min: 0, max: 0 },
-            responsibilities: [''],
-            startDate: '',
-            applicationDeadline: '',
-            showCompanyAbout: false
+            showCompanyAbout: false,
+            visaSponsorship: 'Not applicable',
+            hasTravelRequirements: 'Yes',
         },
         onSubmit: async ({ value }) => {
           console.log(value)
@@ -32,8 +24,9 @@ function Form() {
             }}
         >
             {/* Important Fields */}
-            <div>
+            <div className="flex flex-col gap-10">
                 <ImportantFields form={form} />
+                <OtherFields form={form} />
             </div>
 
         </form>

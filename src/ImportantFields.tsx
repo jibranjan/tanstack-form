@@ -23,47 +23,55 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             {isExpanded && (
                 <>
                     {/* JD Upload */}
-                    <form.Field className="flex flex-col gap-5 relative" name="jdUpload">
-                    <label className="text-sm text-gray-700">
-                        Upload or provide link to JD
-                    </label>
-                    <div className="flex items-center gap-2 mt-1">
-                        <button
-                            className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg"
-                            onClick={() => {
-                                /* Handle upload */
-                            }}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-4 h-4"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                                />
-                            </svg>
-                            Upload
-                        </button>
-                        <span className="text-sm font-light text-gray-500">or</span>
-                        <input
-                            name="jdUpload"
-                            value={form.state.value}
-                            onBlur={form.handleBlur}
-                            onChange={(e) => {
-                                form.handleChange(e.target.value);
-                            }}
-                            type="url"
-                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
-                            placeholder="https://job.example.co/post=1"
-                        />
-                    </div>
-                    </form.Field>
+                    <form.Field 
+                        className="flex flex-col gap-5 relative" 
+                        name="jdUpload"
+                        children={(field: any) => {
+                            return (
+                                <div>
+                                    <label className="text-sm text-gray-700">
+                                        Upload or provide link to JD
+                                    </label>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <button
+                                            className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg"
+                                            onClick={() => {
+                                                /* Handle upload */
+                                            }}
+                                        >
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                strokeWidth={1.5}
+                                                stroke="currentColor"
+                                                className="w-4 h-4"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+                                                />
+                                            </svg>
+                                            Upload
+                                        </button>
+                                        <span className="text-sm font-light text-gray-500">or</span>
+                                        <input
+                                            name={field.name}
+                                            value={field.state.value}
+                                            onBlur={field.handleBlur}
+                                            onChange={(e) => {
+                                                field.handleChange(e.target.value);
+                                            }}
+                                            type="url"
+                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                            placeholder="https://job.example.co/post=1"
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        }}
+                    />
 
                     {/* AI Auto Populate */}
                     <div className="flex items-center gap-2 cursor-pointer w-fit ml-auto absolute right-2 top-36">
@@ -87,7 +95,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         name="jobTitle"
                         children={(field: any) => {
                             return (
-                                <>
+                                <div>
                                     <label className="text-sm text-gray-700 mt-7 eqp-required-field">
                                         Job Title
                                     </label>
@@ -102,7 +110,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
                                         placeholder="Ex. Software Engineer"
                                     />
-                                </>
+                                </div>
                             );
                         }}
                     />
@@ -467,8 +475,8 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         onChange={(e) => field.handleChange(e.target.value)}
                                         className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24"
                                     >
-                                        <option value="$">$</option>
-                                        <option value="₹">₹</option>
+                                        <option value="usd">$</option>
+                                        <option value="inr">₹</option>
                                     </select>
                                 )}
                             />
