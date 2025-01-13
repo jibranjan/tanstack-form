@@ -17,7 +17,7 @@ function FormHeading({ fieldName, isExpanded, onToggle }: FormHeadingProps) {
                 viewBox="0 0 24 24" 
                 strokeWidth={1.5} 
                 stroke="currentColor" 
-                className={`text-gray-600 w-5 transition-transform duration-200 ${
+                className={`text-gray-600 w-5 transition ease-in-out duration-300 ${
                     isExpanded ? 'rotate-180' : ''
                 }`}
             >
