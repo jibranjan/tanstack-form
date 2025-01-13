@@ -11,6 +11,7 @@ function Form() {
             showCompanyAbout: false,
             visaSponsorship: 'Not applicable',
             hasTravelRequirements: 'Yes',
+            howCandidatesApply: 'job-posting-url',
         },
         onSubmit: async ({ value }) => {
           console.log(value)
