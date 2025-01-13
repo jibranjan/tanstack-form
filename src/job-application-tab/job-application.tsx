@@ -110,6 +110,12 @@ function JobApplication({ form }: JobApplicationProps) {
         )
     };
 
+    const [customFields, setCustomFields] = useState<FieldType[]>([]);
+
+    const eqpSwal = () => {
+        
+    }
+
     return (
         <section className="flex flex-col gap-5">
             {/* How candidates apply? */}
@@ -196,7 +202,30 @@ function JobApplication({ form }: JobApplicationProps) {
                 {/* Custom Fields */}
                 <div className="flex flex-col gap-2">
                     <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">Custom Fields</h3>
+                    <div className="flex flex-col gap-2 p-2">
+                        {customFields.map((field) => (
+                            <div key={field.id} className="flex items-center justify-between gap-2 col-span-1">
+                                <span>{field.name}</span>
+                            </div>
+                        ))}
+
+                        <div
+                            className="border border-dashed border-blue-900 rounded-lg px-5 py-0.5 flex items-center justify-center gap-2 text-blue-900 cursor-pointer bg-indigo-50 w-fit"
+                            onClick={() => {
+                                eqpSwal()
+                            }}
+                        >
+                            <span className="text-lg">+</span>
+                            <span className="text-sm">Create Custom Field</span>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            {/* Screening Questions */}
+            {/* Have not worked on this part as we will have to use soc here */}
+            <div>
+                <h2 className="text-gray-700 mb-3">Screening Questions</h2>
             </div>
         </section>
     );
