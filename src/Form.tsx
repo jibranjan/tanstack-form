@@ -1,6 +1,8 @@
 import { useForm } from "@tanstack/react-form"
+import FieldAccordion from "./FieldAccordion.tsx"
 import ImportantFields from "./job-description-tab/ImportantFields.tsx"
 import OtherFields from "./job-description-tab/OtherFields.tsx"
+import JobApplication from "./job-application-tab/job-application.tsx"
 
 function Form() {
     const form = useForm({
@@ -25,8 +27,15 @@ function Form() {
         >
             {/* Important Fields */}
             <div className="flex flex-col gap-10">
-                <ImportantFields form={form} />
-                <OtherFields form={form} />
+                <FieldAccordion fieldName="Important Fields">
+                    <ImportantFields form={form}  />
+                </FieldAccordion>
+                <FieldAccordion fieldName="Other Fields">
+                    <OtherFields form={form} />
+                </FieldAccordion>
+                <FieldAccordion fieldName="Job Application">
+                    <JobApplication form={form} />
+                </FieldAccordion>
             </div>
 
         </form>
