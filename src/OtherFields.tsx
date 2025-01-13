@@ -26,10 +26,11 @@ function OtherFields({ form }: OtherFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
                                         Job Category
                                     </label>
                                     <input
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -49,10 +50,11 @@ function OtherFields({ form }: OtherFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
                                         Education Required
                                     </label>
                                     <select 
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value} 
                                         onBlur={field.handleBlur}
@@ -74,8 +76,9 @@ function OtherFields({ form }: OtherFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">Perks</label>
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">Perks</label>
                                     <textarea
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -94,8 +97,9 @@ function OtherFields({ form }: OtherFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">Application Instructions</label>
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">Application Instructions</label>
                                     <textarea
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -114,10 +118,11 @@ function OtherFields({ form }: OtherFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
                                         Contact Person
                                     </label>
                                     <select 
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value} 
                                         onBlur={field.handleBlur}
@@ -134,7 +139,7 @@ function OtherFields({ form }: OtherFieldsProps) {
 
                     {/* Visa Sponsorship */}
                     <div>
-                        <label className="text-sm text-gray-700">Will visa be sponsored?</label>
+                        <span className="text-sm text-gray-700">Will visa be sponsored?</span>
                         <div className="flex items-center gap-3 mt-1">
                         {['Yes', 'No', 'Not applicable'].map((option) => (
                                 <form.Field
@@ -161,7 +166,7 @@ function OtherFields({ form }: OtherFieldsProps) {
 
                     {/* Travel Requirements */}
                     <div>
-                        <label className="text-sm text-gray-700">Job has travel requirements?</label>
+                        <span className="text-sm text-gray-700">Job has travel requirements?</span>
                         <div className="flex items-center gap-3 mt-1">
                         {['Yes', 'No'].map((option) => (
                                 <form.Field
@@ -187,6 +192,7 @@ function OtherFields({ form }: OtherFieldsProps) {
                     </div>
 
                     {/* Attachment */}
+
                 </>
             )}
         </section>
