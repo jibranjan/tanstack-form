@@ -24,7 +24,7 @@ function Form() {
       })
     return (
         <form
-            className="max-w-lg"
+            className="max-w-lg mb-20"
             onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
