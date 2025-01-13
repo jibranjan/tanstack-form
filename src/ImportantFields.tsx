@@ -527,7 +527,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             />
             <button 
                 disabled={responsibilities[responsibilities.length - 1] === ""}
-                className="text-sm text-blue-500 cursor-pointer w-fit"
+                className={`text-sm text-blue-500 cursor-pointer w-fit ${responsibilities[responsibilities.length - 1] === "" ? "opacity-50" : ""}`}
                 title={responsibilities[responsibilities.length - 1] === "" ? "Please add at least one responsibility" : ""}
                 onClick={(e) => {
                     e.preventDefault();
@@ -539,6 +539,84 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             >
                 Add more +
             </button>
+
+            <form.Field
+                className="flex flex-col gap-5"
+                name="employmentStartDate"
+                children={(field: any) => {
+                    return (
+                        <div>
+                            <label className="text-sm text-gray-700">Employment Start Date</label>
+                            <input
+                                type="date"
+                                name={field.name}
+                                value={field.state.value}
+                                onBlur={field.handleBlur}
+                                onChange={(e) => field.handleChange(e.target.value)}
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                            />
+                        </div>
+                    );
+                }}
+            />
+
+            {/* Application Deadline */}
+            <form.Field
+                className="flex flex-col gap-5"
+                name="applicationDeadline"
+                children={(field: any) => {
+                    return (
+                        <div>
+                            <label className="text-sm text-gray-700">Application Deadline</label>
+                            <input
+                                type="date"
+                                name={field.name}
+                                value={field.state.value}
+                                onBlur={field.handleBlur}
+                                onChange={(e) => field.handleChange(e.target.value)}
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                            />
+                        </div>
+                    );
+                }}
+            />
+
+            {/* Show Company About */}
+            <form.Field
+                name="showCompanyAbout"
+                children={(field: any) => {
+                    return (
+                        <div>
+                            <span className="text-sm text-gray-700">Show Company About</span>
+                            <div className="flex items-center gap-3 mt-1">
+                                {[
+                                    { id: "show-about-yes", value: true, label: "Yes" },
+                                    { id: "show-about-no", value: false, label: "No" },
+                                ].map((option) => (
+                                    <span key={option.id} className="flex items-center gap-1.5">
+                                        <input
+                                            id={option.id}
+                                            className="w-4 h-4 accent-blue-900"
+                                            type="radio"
+                                            name={field.name}
+                                            value={option.label}
+                                            checked={field.state.value === option.value}
+                                            onBlur={field.handleBlur}
+                                            onChange={(e) => field.handleChange(e.target.value)}
+                                        />
+                                        <label
+                                            htmlFor={option.id}
+                                            className="text-sm font-light text-gray-700"
+                                        >
+                                            {option.label}
+                                        </label>
+                                    </span>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                }}
+            />
         </section>
     );
 }

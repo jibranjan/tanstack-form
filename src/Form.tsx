@@ -7,7 +7,7 @@ function Form() {
             jdUpload: '',
             jobTitle: '',
             roleType: 'On-site',
-            locations: [{ country: '', cities: [] }],
+            locations: [{ country: '', cities: [] }], // rn in forms.tsx i am not using an object for locations, will have to change it
             jobType: '',
             experience: { min: 0, max: 0 },
             skills: [],
