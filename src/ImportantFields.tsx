@@ -23,13 +23,13 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             {isExpanded && (
                 <>
                     {/* JD Upload */}
-                    <form.Field 
-                        className="flex flex-col gap-5 relative" 
+                    <form.Field
+                        className="flex flex-col gap-5 relative"
                         name="jdUpload"
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
                                         Upload or provide link to JD
                                     </label>
                                     <div className="flex items-center gap-2 mt-1">
@@ -57,6 +57,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         </button>
                                         <span className="text-sm font-light text-gray-500">or</span>
                                         <input
+                                            id={field.name}
                                             name={field.name}
                                             value={field.state.value}
                                             onBlur={field.handleBlur}
@@ -69,7 +70,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         />
                                     </div>
                                 </div>
-                            )
+                            );
                         }}
                     />
 
@@ -95,11 +96,15 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         name="jobTitle"
                         children={(field: any) => {
                             return (
-                                <div>
-                                    <label className="text-sm text-gray-700 mt-7 eqp-required-field">
+                                <div className="mt-10">
+                                    <label
+                                        htmlFor={field.name}
+                                        className="text-sm text-gray-700 mt-7 eqp-required-field"
+                                    >
                                         Job Title
                                     </label>
                                     <input
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -138,7 +143,6 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                                     type="radio"
                                                     name={field.name}
                                                     value={option.label}
-                                                    // defaultChecked={option.label === "On-site"}
                                                     checked={field.state.value === option.label}
                                                     onBlur={field.handleBlur}
                                                     onChange={(e) => field.handleChange(e.target.value)}
@@ -187,9 +191,24 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                                     <option value="" disabled>
                                                         Select Country
                                                     </option>
-                                                    <option value="United States" disabled={locations.includes("United States")}>United States</option>
-                                                    <option value="Canada" disabled={locations.includes("Canada")}>Canada</option>
-                                                    <option value="United Kingdom" disabled={locations.includes("United Kingdom")}>United Kingdom</option>
+                                                    <option
+                                                        value="United States"
+                                                        disabled={locations.includes("United States")}
+                                                    >
+                                                        United States
+                                                    </option>
+                                                    <option
+                                                        value="Canada"
+                                                        disabled={locations.includes("Canada")}
+                                                    >
+                                                        Canada
+                                                    </option>
+                                                    <option
+                                                        value="United Kingdom"
+                                                        disabled={locations.includes("United Kingdom")}
+                                                    >
+                                                        United Kingdom
+                                                    </option>
                                                 </select>
 
                                                 <div className="flex flex-wrap gap-2 mt-1">
@@ -262,7 +281,9 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                                                         </option>
                                                                         <option
                                                                             value="San Francisco"
-                                                                            disabled={cities.includes("San Francisco")}
+                                                                            disabled={cities.includes(
+                                                                                "San Francisco"
+                                                                            )}
                                                                         >
                                                                             San Francisco
                                                                         </option>
@@ -304,7 +325,9 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                                                         </option>
                                                                         <option
                                                                             value="Washington D.C."
-                                                                            disabled={cities.includes("Washington D.C.")}
+                                                                            disabled={cities.includes(
+                                                                                "Washington D.C."
+                                                                            )}
                                                                         >
                                                                             Washington D.C.
                                                                         </option>
@@ -323,8 +346,13 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
                         <button
                             disabled={locations.some((loc) => loc === "")}
-                            title={locations.some((loc) => loc === "") ? "Please add at least one country" : ""}
-                            className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : ""}`}
+                            title={
+                                locations.some((loc) => loc === "")
+                                    ? "Please add at least one country"
+                                    : ""
+                            }
+                            className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : ""
+                                }`}
                             onClick={(e) => {
                                 e.preventDefault();
                                 setLocations((prev) => [...prev, ""]);
@@ -341,8 +369,14 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700 eqp-required-field">Job Type</label>
+                                    <label
+                                        htmlFor={field.name}
+                                        className="text-sm text-gray-700 eqp-required-field"
+                                    >
+                                        Job Type
+                                    </label>
                                     <select
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -351,20 +385,24 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         }}
                                         className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                                     >
-                                        <option value="" disabled>Select Job Type</option>
+                                        <option value="" disabled>
+                                            Select Job Type
+                                        </option>
                                         <option value="Full-time">Full-time</option>
                                         <option value="Part-time">Part-time</option>
                                         <option value="Contract">Contract</option>
                                         <option value="Internship">Internship</option>
                                     </select>
                                 </div>
-                            )
+                            );
                         }}
                     />
 
                     {/* Experience */}
                     <div>
-                        <span className="text-sm text-gray-700 eqp-required-field">Experience</span>
+                        <span className="text-sm text-gray-700 eqp-required-field">
+                            Experience
+                        </span>
                         <div className="flex items-center justify-between mt-1 gap-3">
                             <form.Field
                                 name="experienceMin"
@@ -416,8 +454,14 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700 eqp-required-field">Skills</label>
+                                    <label
+                                        htmlFor={field.name}
+                                        className="text-sm text-gray-700 eqp-required-field"
+                                    >
+                                        Skills
+                                    </label>
                                     <select
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -426,14 +470,16 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         }}
                                         className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                                     >
-                                        <option value="" disabled>Select Skills</option>
+                                        <option value="" disabled>
+                                            Select Skills
+                                        </option>
                                         <option value="Python">Python</option>
                                         <option value="JavaScript">JavaScript</option>
                                         <option value="React">React</option>
                                         <option value="Node.js">Node.js</option>
                                     </select>
                                 </div>
-                            )
+                            );
                         }}
                     />
 
@@ -444,9 +490,15 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700 eqp-required-field">Job Description</label>
+                                    <label
+                                        htmlFor={field.name}
+                                        className="text-sm text-gray-700 eqp-required-field"
+                                    >
+                                        Job Description
+                                    </label>
                                     {/* Later will use TipTap here */}
                                     <textarea
+                                        id={field.name}
                                         name={field.name}
                                         value={field.state.value}
                                         onBlur={field.handleBlur}
@@ -457,13 +509,15 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         placeholder="Enter Job Description"
                                     ></textarea>
                                 </div>
-                            )
+                            );
                         }}
                     />
 
                     {/* Salary */}
                     <div>
-                        <span className="text-sm text-gray-700 eqp-required-field">Salary</span>
+                        <span className="text-sm text-gray-700 eqp-required-field">
+                            Salary
+                        </span>
                         <div className="flex items-center gap-3 mt-1">
                             <form.Field
                                 name="salaryCurrency"
@@ -518,16 +572,22 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700 eqp-required-field">Responsibilities</label>
+                                    <label className="text-sm text-gray-700 eqp-required-field">
+                                        Responsibilities
+                                    </label>
                                     {responsibilities.map((resp, respIndex) => (
                                         <div key={resp + respIndex}>
                                             <textarea
                                                 name={`${field.name}-${respIndex}`}
                                                 // value={field.state.value}
                                                 defaultValue={resp}
-                                                onBlur={(e)=>{
+                                                onBlur={(e) => {
                                                     field.handleBlur();
-                                                    setResponsibilities((prev) => prev.map((resp, index) => index === respIndex ? e.target.value : resp) );
+                                                    setResponsibilities((prev) =>
+                                                        prev.map((resp, index) =>
+                                                            index === respIndex ? e.target.value : resp
+                                                        )
+                                                    );
                                                 }}
                                                 onChange={(e) => {
                                                     field.handleChange(e.target.value);
@@ -537,24 +597,36 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             ></textarea>
                                         </div>
                                     ))}
+
+                                    <button
+                                        disabled={
+                                            responsibilities[responsibilities.length - 1] === ""
+                                        }
+                                        className={`text-sm text-blue-500 cursor-pointer w-fit ${responsibilities[responsibilities.length - 1] === ""
+                                                ? "opacity-50"
+                                                : ""
+                                            }`}
+                                        title={
+                                            responsibilities[responsibilities.length - 1] === ""
+                                                ? "Please add at least one responsibility"
+                                                : ""
+                                        }
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            const allRespHaveValues = responsibilities.every(
+                                                (resp) => resp !== ""
+                                            );
+                                            if (allRespHaveValues) {
+                                                setResponsibilities((prev) => [...prev, ""]);
+                                            }
+                                        }}
+                                    >
+                                        Add more +
+                                    </button>
                                 </div>
-                            )
+                            );
                         }}
                     />
-                    <button 
-                        disabled={responsibilities[responsibilities.length - 1] === ""}
-                        className={`text-sm text-blue-500 cursor-pointer w-fit ${responsibilities[responsibilities.length - 1] === "" ? "opacity-50" : ""}`}
-                        title={responsibilities[responsibilities.length - 1] === "" ? "Please add at least one responsibility" : ""}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            const allRespHaveValues = responsibilities.every((resp) => resp !== "");
-                            if (allRespHaveValues) {
-                                setResponsibilities((prev) => [...prev, ""]);
-                            }
-                        }}
-                    >
-                        Add more +
-                    </button>
 
                     <form.Field
                         className="flex flex-col gap-5"
@@ -562,8 +634,11 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">Employment Start Date</label>
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
+                                        Employment Start Date
+                                    </label>
                                     <input
+                                        id={field.name}
                                         type="date"
                                         name={field.name}
                                         value={field.state.value}
@@ -583,8 +658,11 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <label className="text-sm text-gray-700">Application Deadline</label>
+                                    <label htmlFor={field.name} className="text-sm text-gray-700">
+                                        Application Deadline
+                                    </label>
                                     <input
+                                        id={field.name}
                                         type="date"
                                         name={field.name}
                                         value={field.state.value}
@@ -603,13 +681,18 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => {
                             return (
                                 <div>
-                                    <span className="text-sm text-gray-700">Show Company About</span>
+                                    <span className="text-sm text-gray-700">
+                                        Show Company About
+                                    </span>
                                     <div className="flex items-center gap-3 mt-1">
                                         {[
                                             { id: "show-about-yes", value: true, label: "Yes" },
                                             { id: "show-about-no", value: false, label: "No" },
                                         ].map((option) => (
-                                            <span key={option.id} className="flex items-center gap-1.5">
+                                            <span
+                                                key={option.id}
+                                                className="flex items-center gap-1.5"
+                                            >
                                                 <input
                                                     id={option.id}
                                                     className="w-4 h-4 accent-blue-900"
