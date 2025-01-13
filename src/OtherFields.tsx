@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import FormHeading from "./FormHeading.tsx";
 
 interface ImportantFieldsProps {
@@ -9,6 +9,8 @@ function OtherFields({ form }: OtherFieldsProps) {
     const [isExpanded, setIsExpanded] = useState(true);
     const [attachCtaText, setAttachCtaText] = useState("Attach");
     const [attachments, setAttachments] = useState<File[]>([]);
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const validateFile = (file: File) => {
         const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/png', 'image/jpeg'];
@@ -25,6 +27,21 @@ function OtherFields({ form }: OtherFieldsProps) {
         }
 
         return true;
+    };
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>, field: any) => {
+        const files = Array.from(e.target.files || []);                                        
+        const validFiles = files.filter(file => {
+            const isValid = validateFile(file);
+            return isValid;
+        });
+        
+        if (validFiles.length > 0) {
+            const newAttachments = [...attachments, ...validFiles];
+            setAttachments(newAttachments);
+            field.handleChange(newAttachments);
+            setAttachCtaText("Attach More");
+        }
     };
 
     return (
@@ -239,6 +256,11 @@ function OtherFields({ form }: OtherFieldsProps) {
                                             if (newAttachments.length === 0) {
                                                 setAttachCtaText("Attach");
                                             }
+
+                                            // Reset the file input using ref
+                                            if (fileInputRef.current) {
+                                                fileInputRef.current.value = '';
+                                            }
                                         }}
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -255,17 +277,15 @@ function OtherFields({ form }: OtherFieldsProps) {
                                 return (
                                     <label htmlFor={field.name} className="text-sm mt-1 font-light flex items-center gap-1.5 cursor-pointer">
                                         <input 
+                                            ref={fileInputRef}
                                             id={field.name}
                                             name={field.name}
                                             type="file" 
+                                            multiple={true}
                                             className="hidden"
+                                            accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
                                             onChange={(e) => {
-                                                const file = e.target.files?.[0];
-                                                if (file && validateFile(file)) {
-                                                    setAttachments([...attachments, file]);
-                                                    field.handleChange([...attachments, file]);
-                                                    setAttachCtaText("Attach More");
-                                                }
+                                                handleFileUpload(e, field);
                                             }}
                                             onBlur={field.handleBlur}
                                         />
