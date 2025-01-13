@@ -127,14 +127,15 @@ function JobApplication({ form }: JobApplicationProps) {
                                 >
                                     <input
                                         id={option.id}
-                                        className="w-4 h-4 accent-blue-900 mt-0.5"
-                                        name={option.id}
+                                        className="!w-4 h-4 accent-blue-900 mt-0.5"
+                                        name="howCandidatesApply"
                                         type="radio"
-                                        checked={field.state.value === option.id}
+                                        defaultValue={option.id}
+                                        defaultChecked={field.state.value === option.id}
                                         onBlur={field.handleBlur}
                                         onChange={(e) => field.handleChange(e.target.value)}
                                     />
-                                    <div className="flex flex-col gap-0.5">
+                                    <div className="flex flex-col gap-0.5 w-full">
                                         <h3 className="text-sm text-gray-700">{option.title}</h3>
                                         <p className="text-xs text-gray-500 font-light">{option.description}</p>
                                     </div>
