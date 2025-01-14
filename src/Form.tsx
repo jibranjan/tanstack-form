@@ -3,7 +3,6 @@ import FieldAccordion from "./FieldAccordion.tsx"
 import ImportantFields from "./job-description-tab/ImportantFields.tsx"
 import OtherFields from "./job-description-tab/OtherFields.tsx"
 import JobApplication from "./job-application-tab/JobApplication.tsx"
-import Stages from "./stages-tab/stages.tsx"
 
 function Form() {
     const form = useForm({
@@ -30,8 +29,6 @@ function Form() {
         >
             {/* Important Fields */}
             <div className="flex flex-col gap-10">
-                <Stages form={form} />
-
                 <FieldAccordion fieldName="Important Fields">
                     <ImportantFields form={form}  />
                 </FieldAccordion>
