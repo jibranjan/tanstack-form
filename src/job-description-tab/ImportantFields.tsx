@@ -71,7 +71,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 <input
                                     id={field.name}
                                     name={field.name}
-                                    value={field.state.value}
+                                    value={field.state.value || ""}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => {
                                         field.handleChange(e.target.value);
@@ -118,7 +118,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <input
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
@@ -187,8 +187,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 return (
                                     <div>
                                         <select
-                                            value={field.state.value}
-                                            defaultValue=""
+                                            value={field.state.value || ""}
                                             className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                                             onBlur={field.handleBlur}
                                             onChange={(e) => {
@@ -390,7 +389,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <select
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
@@ -424,7 +423,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     <input
                                         type="number"
                                         name={field.name}
-                                        value={field.state.value}
+                                        value={field.state.value || ""}
                                         onBlur={field.handleBlur}
                                         onChange={(e) => {
                                             field.handleChange(e.target.value);
@@ -444,7 +443,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     <input
                                         type="number"
                                         name={field.name}
-                                        value={field.state.value}
+                                        value={field.state.value || ""}
                                         onBlur={field.handleBlur}
                                         onChange={(e) => {
                                             field.handleChange(e.target.value);
@@ -475,7 +474,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <select
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
@@ -512,7 +511,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <textarea
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
@@ -536,7 +535,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         children={(field: any) => (
                             <select
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24"
@@ -552,7 +551,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <input
                                 type="number"
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
@@ -566,7 +565,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <input
                                 type="number"
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
@@ -591,7 +590,6 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 <div key={resp + respIndex}>
                                     <textarea
                                         name={`${field.name}-${respIndex}`}
-                                        // value={field.state.value}
                                         defaultValue={resp}
                                         onBlur={(e) => {
                                             field.handleBlur();
@@ -646,14 +644,14 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 children={(field: any) => {
                     return (
                         <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700">
+                            <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">
                                 Employment Start Date
                             </label>
                             <input
                                 id={field.name}
                                 type="date"
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
@@ -670,14 +668,14 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 children={(field: any) => {
                     return (
                         <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700">
+                            <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">
                                 Application Deadline
                             </label>
                             <input
                                 id={field.name}
                                 type="date"
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
@@ -693,7 +691,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 children={(field: any) => {
                     return (
                         <div>
-                            <span className="text-sm text-gray-700">
+                            <span className="text-sm text-gray-700 eqp-required-field">
                                 Show Company About
                             </span>
                             <div className="flex items-center gap-3 mt-1">
@@ -710,8 +708,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             className="w-4 h-4 accent-blue-900"
                                             type="radio"
                                             name={field.name}
-                                            value={option.label}
-                                            checked={field.state.value === option.value}
+                                            defaultChecked={field.state.value === option.value}
                                             onBlur={field.handleBlur}
                                             onChange={(e) => field.handleChange(e.target.value)}
                                         />

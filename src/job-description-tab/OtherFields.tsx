@@ -58,7 +58,7 @@ function OtherFields({ form }: OtherFieldsProps) {
                             <input
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 type="text"
@@ -82,11 +82,14 @@ function OtherFields({ form }: OtherFieldsProps) {
                             <select 
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value} 
+                                value={field.state.value || ""} 
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)} 
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                             >
+                                <option value="" disabled>
+                                    Select Education
+                                </option>
                                 <option value="B.Tech">B.Tech</option>
                                 <option value="B.Sc">B.Sc</option>
                                 <option value="B.Com">B.Com</option>
@@ -106,7 +109,7 @@ function OtherFields({ form }: OtherFieldsProps) {
                             <textarea
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
@@ -127,7 +130,7 @@ function OtherFields({ form }: OtherFieldsProps) {
                             <textarea
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value}
+                                value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
@@ -150,7 +153,7 @@ function OtherFields({ form }: OtherFieldsProps) {
                             <select 
                                 id={field.name}
                                 name={field.name}
-                                value={field.state.value} 
+                                value={field.state.value || ""} 
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)} 
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"

@@ -62,8 +62,8 @@ function JobApplication({ form }: JobApplicationProps) {
                                                 id={`${fld.id}-checkbox`}
                                                 className="w-3.5 h-3.5 accent-blue-900 mt-0.5 rounded-sm" 
                                                 type="checkbox" 
-                                                checked={field.state.value || form.getFieldValue(mandatoryFieldName)}
-                                                disabled={!fld.allowChange || form.getFieldValue(mandatoryFieldName)}
+                                                checked={field.state.value || form.getFieldValue(mandatoryFieldName) || false}
+                                                disabled={!fld.allowChange || form.getFieldValue(mandatoryFieldName) || false}
                                                 onBlur={field.handleBlur}
                                                 onChange={(e) => field.handleChange(e.target.checked)}
                                             />
@@ -86,8 +86,8 @@ function JobApplication({ form }: JobApplicationProps) {
                                                 id={`${fld.id}-mandatory`}
                                                 type="checkbox"
                                                 className="sr-only peer"
-                                                checked={field.state.value}
-                                                disabled={!fld.allowChange}
+                                                checked={field.state.value || false}
+                                                disabled={!fld.allowChange || false}
                                                 onBlur={field.handleBlur}
                                                 onChange={(e) => {
                                                     field.handleChange(e.target.checked);
@@ -131,8 +131,8 @@ function JobApplication({ form }: JobApplicationProps) {
                                         className="!w-4 h-4 accent-blue-900 mt-0.5"
                                         name="howCandidatesApply"
                                         type="radio"
-                                        defaultValue={option.id}
-                                        defaultChecked={field.state.value === option.id}
+                                        defaultValue={option.id || ""}
+                                        defaultChecked={field.state.value === option.id || false}
                                         onBlur={field.handleBlur}
                                         onChange={(e) => field.handleChange(e.target.value)}
                                     />
@@ -155,6 +155,8 @@ function JobApplication({ form }: JobApplicationProps) {
                                 <label htmlFor="assignee" className="text-sm text-gray-700 font-light">Assignee</label>
                                 <select
                                     id="assignee"
+                                    name="assignee"
+                                    value={field.state.value || ""}
                                     className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                                     onChange={(e) => field.handleChange(e.target.value)}
                                     onBlur={field.handleBlur}
