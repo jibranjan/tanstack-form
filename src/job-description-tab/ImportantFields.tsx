@@ -13,22 +13,34 @@ function ImportantFields({ form }: ImportantFieldsProps) {
     return (
         <section className="flex flex-col gap-3">
             {/* JD Upload */}
-            <form.Field
-                className="flex flex-col gap-5 relative"
-                name="jdUpload"
-                children={(field: any) => {
-                    return (
-                        <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700">
-                                Upload or provide link to JD
-                            </label>
-                            <div className="flex items-center gap-2 mt-1">
-                                <button
-                                    className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg"
+            <div>
+                <span className="text-sm text-gray-700 eqp-required-field">
+                    Upload or provide link to JD
+                </span>
+
+                <div className="flex items-center gap-2 mt-1">
+                    <form.Field
+                        name="jdUpload"
+                        children={(field: any) => {
+                            return (
+                                <label
+                                    className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out"
                                     onClick={() => {
                                         /* Handle upload */
                                     }}
                                 >
+                                    <input 
+                                        id={field.name}
+                                        name={field.name}
+                                        type="file" 
+                                        multiple={true}
+                                        className="hidden"
+                                        accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
+                                        onChange={(e) => {
+                                            field.handleChange(e.target.files);
+                                        }}
+                                        onBlur={field.handleBlur}
+                                    />
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
@@ -43,9 +55,19 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
                                         />
                                     </svg>
+
                                     Upload
-                                </button>
-                                <span className="text-sm font-light text-gray-500">or</span>
+                                </label>
+                            )
+                        }}
+                    />
+
+                    <span className="text-sm font-light text-gray-500">or</span>
+
+                    <form.Field
+                        name="jdLink"
+                        children={(field: any) => {
+                            return (
                                 <input
                                     id={field.name}
                                     name={field.name}
@@ -58,14 +80,14 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
                                     placeholder="https://job.example.co/post=1"
                                 />
-                            </div>
-                        </div>
-                    );
-                }}
-            />
+                            )
+                        }}
+                    />
+                </div>
+            </div>
 
             {/* AI Auto Populate */}
-            <div className="flex items-center gap-2 cursor-pointer w-fit ml-auto absolute right-2 top-36">
+            <div className="flex items-center gap-2 cursor-pointer w-fit ml-auto absolute right-2 top-36 active:scale-95 transition-all duration-150 ease-in-out">
                 <svg
                     className="w-5 h-5"
                     viewBox="0 0 18 18"
@@ -341,7 +363,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             ? "Please add at least one country"
                             : ""
                     }
-                    className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : ""
+                    className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : "active:scale-95 transition-all duration-150 ease-in-out"
                         }`}
                     onClick={(e) => {
                         e.preventDefault();
@@ -594,7 +616,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 }
                                 className={`text-sm text-blue-500 cursor-pointer w-fit ${responsibilities[responsibilities.length - 1] === ""
                                         ? "opacity-50"
-                                        : ""
+                                        : "active:scale-95 transition-all duration-150 ease-in-out"
                                     }`}
                                 title={
                                     responsibilities[responsibilities.length - 1] === ""
