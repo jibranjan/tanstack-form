@@ -1,7 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const JobCreationTabs = () => {
-    const [activeTab, setActiveTab] = useState(0)
+interface JobCreationTabsProps {
+    activeTab: number;
+    setActiveTab: (tab: number) => void;
+}
+
+const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
     const TAB_CONTENT = [
         {
             title: "Job Description",
@@ -54,16 +58,24 @@ const JobCreationTabs = () => {
                 <button 
                     id="jc-cancel-btn" 
                     className="text-sm rounded-lg px-4 py-1.5 sm:px-5 border bg-white border-blue-900 text-blue-900 active:scale-95 transition-all duration-150 ease-in-out"
-                    onClick={() => setActiveTab(activeTab - 1)}
+                    onClick={() => {
+                        if (activeTab === 1) {
+                            setActiveTab(activeTab - 1)
+                        }
+                    }}
                 >
                     Cancel
                 </button>
                 <button 
                     id="jc-next-btn" 
-                    className="text-sm rounded-lg px-4 py-1.5 sm:px-5 border bg-blue-900 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out"
-                    onClick={() => setActiveTab(activeTab + 1)}
+                    className="text-sm rounded-lg w-20 px-4 py-1.5 sm:px-5 border bg-blue-900 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out"
+                    onClick={() => {
+                        if (activeTab === 0) {
+                            setActiveTab(activeTab + 1)
+                        }
+                    }}
                 >
-                    Next 
+                    {activeTab === 0 ? 'Next' : 'Finish'}
                 </button>
             </div>
         </section>
