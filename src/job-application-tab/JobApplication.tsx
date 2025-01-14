@@ -110,17 +110,12 @@ function JobApplication({ form }: JobApplicationProps) {
         )
     };
 
-    const [customFields, setCustomFields] = useState<FieldType[]>([]);
-
-    const eqpSwal = () => {
-        
-    }
 
     return (
-        <section className="flex flex-col gap-5">
+        <section className="flex flex-col gap-5 bg-white rounded-lg px-5 py-3 shadow-md">
             {/* How candidates apply? */}
             <div>
-                <h2 className="text-gray-700 mb-3">How candidates apply?</h2>
+                <h2 className="text-gray-700 text-lg mb-3">How candidates apply?</h2>
                 <div className="flex flex-col gap-3 mb-3">
                     {applicationOptions.map((option) => (
                         <form.Field
@@ -177,13 +172,16 @@ function JobApplication({ form }: JobApplicationProps) {
             <div className="flex flex-col gap-5">
                 {/* heading */}
                 <div className="flex justify-between items-end mt-2">
-                    <h2 className="text-gray-700">Candidate Fields</h2>
-                    <div className="text-sm text-blue-900 cursor-pointer flex items-center gap-1 border border-blue-900 px-2 py-1 rounded-md">
-                        <div>
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5.33331 5.99999L7.99998 3.33333L10.6666 6M10.6666 9.99999L7.99998 12.6667L5.33331 9.99999" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                        </div>
+                    <h2 className="text-gray-700 text-lg">Candidate Fields</h2>
+                    <div 
+                        className="text-sm text-blue-900 cursor-pointer flex items-center gap-1 border border-blue-900 px-2 py-1 rounded-md active:scale-95 transition-all duration-150 ease-in-out"
+                        onClick={() => {
+                            // Will have to show a swal, not doing it rn.
+                        }}
+                    >
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.33331 5.99999L7.99998 3.33333L10.6666 6M10.6666 9.99999L7.99998 12.6667L5.33331 9.99999" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                         <span>Re-order Fields</span>
                     </div>
                 </div>
@@ -203,16 +201,16 @@ function JobApplication({ form }: JobApplicationProps) {
                 <div className="flex flex-col gap-2">
                     <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">Custom Fields</h3>
                     <div className="flex flex-col gap-2 p-2">
-                        {customFields.map((field) => (
+                        {/* {customFields.map((field) => (
                             <div key={field.id} className="flex items-center justify-between gap-2 col-span-1">
                                 <span>{field.name}</span>
                             </div>
-                        ))}
+                        ))} */}
 
                         <div
-                            className="border border-dashed border-blue-900 rounded-lg px-5 py-0.5 flex items-center justify-center gap-2 text-blue-900 cursor-pointer bg-indigo-50 w-fit"
+                            className="border border-dashed border-blue-900 rounded-lg px-5 py-0.5 flex items-center justify-center gap-2 text-blue-900 cursor-pointer bg-indigo-50 w-fit active:scale-95 transition-all duration-150 ease-in-out"
                             onClick={() => {
-                                eqpSwal()
+                                // Will have to show a swal, not doing it rn.
                             }}
                         >
                             <span className="text-lg">+</span>
@@ -223,9 +221,9 @@ function JobApplication({ form }: JobApplicationProps) {
             </div>
 
             {/* Screening Questions */}
-            {/* Have not worked on this part as we will have to use soc here */}
             <div>
-                <h2 className="text-gray-700 mb-3">Screening Questions</h2>
+                {/* We will have to use Soc here, so not done this part */}
+                <h2 className="text-gray-700 text-lg mb-3">Screening Questions</h2>
             </div>
         </section>
     );
