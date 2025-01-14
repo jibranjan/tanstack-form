@@ -265,30 +265,32 @@ function OtherFields({ form }: OtherFieldsProps) {
                     name="attachments"
                     children={(field: any) => {
                         return (
-                            <label htmlFor={field.name} className="text-sm mt-1 font-light flex items-center gap-1.5 cursor-pointer">
-                                <input 
-                                    ref={fileInputRef}
-                                    id={field.name}
-                                    name={field.name}
-                                    type="file" 
-                                    multiple={true}
-                                    className="hidden"
-                                    accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
-                                    onChange={(e) => {
-                                        handleFileUpload(e, field);
-                                    }}
-                                    onBlur={field.handleBlur}
-                                />
-                                <div className="flex items-center gap-1">
-                                    <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M10.1143 4.66667L5.72382 9.05719C5.20312 9.57789 5.20312 10.4221 5.72382 10.9428C6.24452 11.4635 7.08874 11.4635 7.60944 10.9428L11.8856 6.55228C12.927 5.51089 12.927 3.82245 11.8856 2.78105C10.8442 1.73965 9.15574 1.73965 8.11434 2.78105L3.8382 7.17157C2.2761 8.73367 2.2761 11.2663 3.8382 12.8284C5.4003 14.3905 7.93296 14.3905 9.49505 12.8284L13.6666 8.66667" stroke="#1E3A8A" strokeLinecap="round" strokeLinejoin="round"/>
-                                    </svg>
-                                    <span className="text-sm font-light text-blue-900">
-                                        {attachCtaText}
-                                    </span>
-                                </div>
+                            <div className="flex items-center gap-1.5">
+                                <label htmlFor={field.name} className="text-sm font-light cursor-pointer">
+                                    <input 
+                                        ref={fileInputRef}
+                                        id={field.name}
+                                        name={field.name}
+                                        type="file" 
+                                        multiple={true}
+                                        className="hidden"
+                                        accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
+                                        onChange={(e) => {
+                                            handleFileUpload(e, field);
+                                        }}
+                                        onBlur={field.handleBlur}
+                                    />
+                                    <div className="flex items-center gap-1 active:scale-95 transition-all duration-150 ease-in-out">
+                                        <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M10.1143 4.66667L5.72382 9.05719C5.20312 9.57789 5.20312 10.4221 5.72382 10.9428C6.24452 11.4635 7.08874 11.4635 7.60944 10.9428L11.8856 6.55228C12.927 5.51089 12.927 3.82245 11.8856 2.78105C10.8442 1.73965 9.15574 1.73965 8.11434 2.78105L3.8382 7.17157C2.2761 8.73367 2.2761 11.2663 3.8382 12.8284C5.4003 14.3905 7.93296 14.3905 9.49505 12.8284L13.6666 8.66667" stroke="#1E3A8A" strokeLinecap="round" strokeLinejoin="round"/>
+                                        </svg>
+                                        <span className="text-sm font-light text-blue-900">
+                                            {attachCtaText}
+                                        </span>
+                                    </div>
+                                </label>
                                 <span className="text-xs font-light italic text-gray-500">(pdf, doc, docx, png, jpeg)</span>
-                            </label>
+                            </div>
                         )
                     }}
                 />

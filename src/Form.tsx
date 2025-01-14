@@ -2,7 +2,8 @@ import { useForm } from "@tanstack/react-form"
 import FieldAccordion from "./FieldAccordion.tsx"
 import ImportantFields from "./job-description-tab/ImportantFields.tsx"
 import OtherFields from "./job-description-tab/OtherFields.tsx"
-import JobApplication from "./job-application-tab/job-application.tsx"
+import JobApplication from "./job-application-tab/JobApplication.tsx"
+import Stages from "./stages-tab/stages.tsx"
 
 function Form() {
     const form = useForm({
@@ -16,10 +17,11 @@ function Form() {
         onSubmit: async ({ value }) => {
           console.log(value)
         },
-      })
+    })
+
     return (
         <form
-            className="max-w-lg mb-20"
+            className="max-md:max-w-2xl md:max-xl:max-w-3xl xl:max-w-lg mt-5 mb-20 max-xl:mx-auto max-md:px-5"
             onSubmit={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -28,15 +30,18 @@ function Form() {
         >
             {/* Important Fields */}
             <div className="flex flex-col gap-10">
+                <Stages form={form} />
+
                 <FieldAccordion fieldName="Important Fields">
                     <ImportantFields form={form}  />
                 </FieldAccordion>
+
                 <FieldAccordion fieldName="Other Fields">
                     <OtherFields form={form} />
                 </FieldAccordion>
-                <FieldAccordion fieldName="Job Application">
-                    <JobApplication form={form} />
-                </FieldAccordion>
+
+                <JobApplication form={form} />
+
             </div>
 
         </form>
