@@ -21,43 +21,48 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 <div className="flex items-center gap-2 mt-1">
                     <form.Field
                         name="jdUpload"
+                        data-field-name="jobDescription"
                         children={(field: any) => {
                             return (
-                                <label
-                                    className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out"
-                                    onClick={() => {
-                                        /* Handle upload */
-                                    }}
-                                >
-                                    <input 
-                                        id={field.name}
-                                        name={field.name}
-                                        type="file" 
-                                        multiple={true}
-                                        className="hidden"
-                                        accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
-                                        onChange={(e) => {
-                                            field.handleChange(e.target.files);
+                                <>
+                                    <label
+                                        className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out"
+                                        onClick={() => {
+                                            /* Handle upload */
                                         }}
-                                        onBlur={field.handleBlur}
-                                    />
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        strokeWidth={1.5}
-                                        stroke="currentColor"
-                                        className="w-4 h-4"
                                     >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+                                        <input 
+                                            id={field.name}
+                                            name={field.name}
+                                            type="file"
+                                            data-field-name="jobDescription"
+                                            data-file-uploaded={false}
+                                            className="hidden req-input-field"
+                                            accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
+                                            onChange={(e) => {
+                                                field.handleChange(e.target.files);
+                                                e.target.setAttribute('data-file-uploaded', 'true');
+                                            }}
+                                            onBlur={field.handleBlur}
                                         />
-                                    </svg>
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            strokeWidth={1.5}
+                                            stroke="currentColor"
+                                            className="w-4 h-4"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
+                                            />
+                                        </svg>
 
-                                    Upload
-                                </label>
+                                        Upload
+                                    </label>
+                                </>
                             )
                         }}
                     />
@@ -70,14 +75,17 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             return (
                                 <input
                                     id={field.name}
+                                    data-field-name="jobDescription"
                                     name={field.name}
+                                    data-file-uploaded={false}
                                     value={field.state.value || ""}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => {
                                         field.handleChange(e.target.value);
+                                        e.target.setAttribute('data-file-uploaded', 'true');
                                     }}
                                     type="url"
-                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                     placeholder="https://job.example.co/post=1"
                                 />
                             )
@@ -124,7 +132,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     field.handleChange(e.target.value);
                                 }}
                                 type="text"
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                 placeholder="Ex. Software Engineer"
                             />
                         </div>
@@ -151,7 +159,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     <span className="flex items-center gap-1.5">
                                         <input
                                             id={option.id}
-                                            className="w-4 h-4 accent-blue-900"
+                                            className="w-4 h-4 accent-blue-900 req-input-field"
                                             type="radio"
                                             name={field.name}
                                             value={option.label}
@@ -187,8 +195,9 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 return (
                                     <div>
                                         <select
+                                            name={field.name}
                                             value={field.state.value || ""}
-                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                             onBlur={field.handleBlur}
                                             onChange={(e) => {
                                                 field.handleChange(e.target.value);
@@ -394,7 +403,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                             >
                                 <option value="" disabled>
                                     Select Job Type
@@ -428,7 +437,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         onChange={(e) => {
                                             field.handleChange(e.target.value);
                                         }}
-                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                         placeholder="Min Years"
                                     />
                                 </div>
@@ -448,7 +457,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         onChange={(e) => {
                                             field.handleChange(e.target.value);
                                         }}
-                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                         placeholder="Max Years"
                                     />
                                 </div>
@@ -479,7 +488,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                             >
                                 <option value="" disabled>
                                     Select Skills
@@ -538,7 +547,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24 req-input-field"
                             >
                                 <option value="usd">$</option>
                                 <option value="inr">₹</option>
@@ -554,7 +563,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                 placeholder="Min salary"
                             />
                         )}
@@ -568,7 +577,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                 placeholder="Max salary"
                             />
                         )}
@@ -654,7 +663,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                             />
                         </div>
                     );
@@ -678,7 +687,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                             />
                         </div>
                     );
@@ -705,7 +714,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     >
                                         <input
                                             id={option.id}
-                                            className="w-4 h-4 accent-blue-900"
+                                            className="w-4 h-4 accent-blue-900 req-input-field"
                                             type="radio"
                                             name={field.name}
                                             defaultChecked={field.state.value === option.value}
