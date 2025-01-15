@@ -18,7 +18,7 @@ function CreateJobPostForm() {
             howCandidatesApply: 'job-posting-url',
         },
         onSubmit: async ({ value }) => {
-          console.log(value)
+            // TODO: Submit the form
         },
     })
 

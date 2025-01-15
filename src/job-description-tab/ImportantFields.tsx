@@ -77,12 +77,10 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     id={field.name}
                                     data-field-name="jobDescription"
                                     name={field.name}
-                                    data-file-uploaded={false}
                                     value={field.state.value || ""}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => {
                                         field.handleChange(e.target.value);
-                                        e.target.setAttribute('data-file-uploaded', 'true');
                                     }}
                                     type="url"
                                     className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"

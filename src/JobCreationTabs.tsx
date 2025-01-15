@@ -6,6 +6,38 @@ interface JobCreationTabsProps {
 }
 
 const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
+    
+    const checkForJobDescriptionUpload = (field: any) => {
+        let jobDescriptionUploaded = false;
+        if (field.hasAttribute('data-file-uploaded') && field.getAttribute('data-file-uploaded') === 'true') {
+            jobDescriptionUploaded = true;
+        } else if (!field.hasAttribute('data-file-uploaded')) {
+            jobDescriptionUploaded = field.value !== undefined && field.value !== "";
+        }
+        return jobDescriptionUploaded;
+    }
+
+    const validateFields = () => {
+        const $reqInputField = document.querySelectorAll('.req-input-field')
+
+        let hasEmptyFields = false;
+        let jdUploaded = false;
+
+        $reqInputField.forEach((field: any) => {
+            if (field.getAttribute('data-field-name') === 'jobDescription') {
+                console.log('field', field)
+                if (!jdUploaded) {
+                    jdUploaded = checkForJobDescriptionUpload(field);
+                }
+                hasEmptyFields = !jdUploaded;
+                console.log('hasEmptyFields', hasEmptyFields)
+            } else if (field.value === undefined || field.value === "") {
+                hasEmptyFields = true;
+            } 
+        })
+        return !hasEmptyFields && jdUploaded;
+    };
+
     const TAB_CONTENT = [
         {
             title: "Job Description",
@@ -30,7 +62,17 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
                                 ${index === 0 ? 'max-lg:rounded-t-lg' : ''} 
                                 lg:rounded-t-lg`}
                             data-container-id={tab.containerId}
-                            onClick={() => setActiveTab(index)}
+                            onClick={() => {
+                                if (activeTab === 0) {
+                                    if (validateFields()) {
+                                        setActiveTab(index);
+                                    } else {
+                                        alert('Please fill in all required fields.');
+                                    }
+                                } else if (activeTab === 1) {
+                                    setActiveTab(index);
+                                }
+                            }}
                         >
                             <div 
                                 className={`rounded-full w-10 h-10 font-light flex items-center justify-center text-sm border ${index === activeTab ? 'border-blue-900 text-blue-900' : 'border-gray-300'}`}
@@ -71,7 +113,11 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
                     className="text-sm rounded-lg w-20 px-4 py-1.5 sm:px-5 border bg-blue-900 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out"
                     onClick={() => {
                         if (activeTab === 0) {
-                            setActiveTab(activeTab + 1)
+                            if (validateFields()) {
+                                setActiveTab(activeTab + 1);
+                            } else {
+                                alert('Please fill in all required fields.');
+                            }
                         }
                     }}
                 >
