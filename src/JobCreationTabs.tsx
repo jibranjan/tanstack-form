@@ -8,7 +8,7 @@ interface JobCreationTabsProps {
 }
 
 const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab }: JobCreationTabsProps) => {
-    
+
     const checkForJobDescriptionUpload = (field: any) => {
         let jobDescriptionUploaded = false;
         if (field.hasAttribute('data-file-uploaded') && field.getAttribute('data-file-uploaded') === 'true') {
@@ -33,7 +33,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                 hasEmptyFields = !jdUploaded;
             } else if (field.value === undefined || field.value === "") {
                 hasEmptyFields = true;
-            } 
+            }
         })
         return !hasEmptyFields && jdUploaded;
     };
@@ -56,7 +56,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
             <div className="flex flex-col lg:flex-row flex-1">
                 {TAB_CONTENT.map((tab, index) => (
                     <React.Fragment key={index}>
-                        <div 
+                        <div
                             className={`w-full flex flex-row gap-3 items-center max-lg:border-b p-3 group tab-item cursor-pointer
                                 ${index === activeTab ? 'active-tab bg-white border-b-2 border-blue-900' : ''} 
                                 ${index <= uploadedTab ? 'bg-white border-b-2 border-green-500' : ''}
@@ -78,7 +78,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                                 }
                             }}
                         >
-                            <div 
+                            <div
                                 className={`rounded-full w-10 h-10 font-light flex items-center justify-center text-sm border
                                     ${index === activeTab ? 'border-blue-900 text-blue-900' : 'border-gray-300'}
                                     ${index <= uploadedTab ? 'border-green-500 text-green-500' : ''}`}
@@ -86,11 +86,11 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                                 {String(index + 1).padStart(2, '0')}
                             </div>
                             <div>
-                            <h3 
-                                className={`text-xs font-medium uppercase 
-                                    ${index === activeTab ? 'text-blue-900' : ''}
-                                    ${index <= uploadedTab ? 'text-green-500' : ''}`}
-                            >
+                                <h3
+                                    className={`text-xs font-medium uppercase 
+                                        ${index === activeTab ? 'text-blue-900' : ''}
+                                        ${index <= uploadedTab ? 'text-green-500' : ''}`}
+                                >
                                     {tab.title}
                                 </h3>
 
@@ -105,8 +105,8 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
             </div>
 
             <div className="flex items-center justify-end gap-3">
-                <button 
-                    id="jc-cancel-btn" 
+                <button
+                    id="jc-cancel-btn"
                     className="text-sm rounded-lg px-4 py-1.5 sm:px-5 border bg-white border-blue-900 text-blue-900 active:scale-95 transition-all duration-150 ease-in-out"
                     onClick={() => {
                         if (activeTab === 1) {
@@ -117,8 +117,8 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                 >
                     Cancel
                 </button>
-                <button 
-                    id="jc-next-btn" 
+                <button
+                    id="jc-next-btn"
                     className="text-sm rounded-lg w-20 px-4 py-1.5 sm:px-5 border bg-blue-900 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out"
                     onClick={() => {
                         if (activeTab === 0) {
