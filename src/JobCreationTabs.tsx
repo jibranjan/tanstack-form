@@ -3,9 +3,11 @@ import React from 'react'
 interface JobCreationTabsProps {
     activeTab: number;
     setActiveTab: (tab: number) => void;
+    uploadedTab: number;
+    setUploadedTab: (tab: number) => void;
 }
 
-const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
+const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab }: JobCreationTabsProps) => {
     
     const checkForJobDescriptionUpload = (field: any) => {
         let jobDescriptionUploaded = false;
@@ -25,12 +27,10 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
 
         $reqInputField.forEach((field: any) => {
             if (field.getAttribute('data-field-name') === 'jobDescription') {
-                console.log('field', field)
                 if (!jdUploaded) {
                     jdUploaded = checkForJobDescriptionUpload(field);
                 }
                 hasEmptyFields = !jdUploaded;
-                console.log('hasEmptyFields', hasEmptyFields)
             } else if (field.value === undefined || field.value === "") {
                 hasEmptyFields = true;
             } 
@@ -59,30 +59,38 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
                         <div 
                             className={`w-full flex flex-row gap-3 items-center max-lg:border-b p-3 group tab-item cursor-pointer
                                 ${index === activeTab ? 'active-tab bg-white border-b-2 border-blue-900' : ''} 
+                                ${index <= uploadedTab ? 'bg-white border-b-2 border-green-500' : ''}
                                 ${index === 0 ? 'max-lg:rounded-t-lg' : ''} 
                                 lg:rounded-t-lg`}
                             data-container-id={tab.containerId}
                             onClick={() => {
-                                if (activeTab === 0) {
-                                    if (validateFields()) {
+                                if (activeTab !== index) {
+                                    if (activeTab === 0) {
+                                        if (validateFields()) {
+                                            setActiveTab(index);
+                                            setUploadedTab(activeTab);
+                                        } else {
+                                            alert('Please fill in all the fields in Important Fields section..');
+                                        }
+                                    } else if (activeTab === 1) {
                                         setActiveTab(index);
-                                    } else {
-                                        alert('Please fill in all required fields.');
                                     }
-                                } else if (activeTab === 1) {
-                                    setActiveTab(index);
                                 }
                             }}
                         >
                             <div 
-                                className={`rounded-full w-10 h-10 font-light flex items-center justify-center text-sm border ${index === activeTab ? 'border-blue-900 text-blue-900' : 'border-gray-300'}`}
+                                className={`rounded-full w-10 h-10 font-light flex items-center justify-center text-sm border
+                                    ${index === activeTab ? 'border-blue-900 text-blue-900' : 'border-gray-300'}
+                                    ${index <= uploadedTab ? 'border-green-500 text-green-500' : ''}`}
                             >
                                 {String(index + 1).padStart(2, '0')}
                             </div>
                             <div>
-                                <h3 
-                                    className={`text-xs font-medium uppercase ${index === activeTab ? 'text-blue-900' : ''}`}
-                                >
+                            <h3 
+                                className={`text-xs font-medium uppercase 
+                                    ${index === activeTab ? 'text-blue-900' : ''}
+                                    ${index <= uploadedTab ? 'text-green-500' : ''}`}
+                            >
                                     {tab.title}
                                 </h3>
 
@@ -103,6 +111,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
                     onClick={() => {
                         if (activeTab === 1) {
                             setActiveTab(activeTab - 1)
+                            setUploadedTab(-1);
                         }
                     }}
                 >
@@ -115,9 +124,12 @@ const JobCreationTabs = ({ activeTab, setActiveTab }: JobCreationTabsProps) => {
                         if (activeTab === 0) {
                             if (validateFields()) {
                                 setActiveTab(activeTab + 1);
+                                setUploadedTab(activeTab);
                             } else {
-                                alert('Please fill in all required fields.');
+                                alert('Please fill in all the fields in Important Fields section..');
                             }
+                        } else {
+                            setUploadedTab(activeTab);
                         }
                     }}
                 >

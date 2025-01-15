@@ -8,6 +8,7 @@ import JobCreationTabs from "./JobCreationTabs.tsx"
 
 function CreateJobPostForm() {
     const [activeTab, setActiveTab] = useState(0)
+    const [uploadedTab, setUploadedTab] = useState(-1)
 
     const form = useForm({
         defaultValues: {
@@ -24,7 +25,12 @@ function CreateJobPostForm() {
 
     return (
         <>
-            <JobCreationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+            <JobCreationTabs 
+                activeTab={activeTab} 
+                setActiveTab={setActiveTab} 
+                uploadedTab={uploadedTab} 
+                setUploadedTab={setUploadedTab} 
+            />
 
             <form
                 className="max-md:max-w-2xl md:max-xl:max-w-3xl xl:max-w-lg mt-5 mb-20 max-xl:mx-auto max-md:px-5"
