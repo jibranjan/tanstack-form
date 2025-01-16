@@ -8,6 +8,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
     const [cities, setCities] = useState<string[]>([]);
     const [locations, setLocations] = useState<string[]>([""]);
     const [responsibilities, setResponsibilities] = useState<string[]>([""]);
+    const [roleType, setRoleType] = useState<string>("");
 
 
     return (
@@ -67,7 +68,10 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             value={option.label}
                                             checked={field.state.value === option.label}
                                             onBlur={field.handleBlur}
-                                            onChange={(e) => field.handleChange(e.target.value)}
+                                            onChange={(e) => {
+                                                setRoleType(e.target.value);
+                                                field.handleChange(e.target.value);
+                                            }}
                                         />
                                         <label
                                             htmlFor={option.id}
@@ -83,8 +87,34 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 </div>
             </div>
 
+            {/* Policy */}
+            {roleType === 'Hybrid' && (
+                <form.Field
+                    name="policy"
+                    children={(field: any) => {
+                        return (
+                            <div>
+                                <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">
+                                    Policy
+                                </label>
+                                <input
+                                    id={field.name}
+                                    name={field.name}
+                                    value={field.state.value || ""}
+                                    onBlur={field.handleBlur}
+                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    type="text"
+                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
+                                    placeholder="Ex. 3 days/week WFH"
+                                />
+                            </div>
+                        );
+                    }}
+                />
+            )}
+
             {/* Location */}
-            <div className="mt-3">
+            <div>
                 <span className="text-sm text-gray-700 eqp-required-field">
                     Location(s)
                 </span>
