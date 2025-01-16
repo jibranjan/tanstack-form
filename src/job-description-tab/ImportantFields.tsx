@@ -523,7 +523,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                 placeholder="Enter Job Description"
                             ></textarea>
                         </div>
@@ -533,7 +533,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
             {/* Salary */}
             <div>
-                <span className="text-sm text-gray-700 eqp-required-field">
+                <span className="text-sm text-gray-700">
                     Salary
                 </span>
                 <div className="flex items-center gap-3 mt-1">
@@ -545,10 +545,10 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24 req-input-field"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 py-2 px-3 rounded-lg w-24"
                             >
-                                <option value="usd">$</option>
-                                <option value="inr">₹</option>
+                                <option value="usd">USD</option>
+                                <option value="inr">INR</option>
                             </select>
                         )}
                     />
@@ -561,7 +561,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
                                 placeholder="Min salary"
                             />
                         )}
@@ -575,7 +575,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
                                 placeholder="Max salary"
                             />
                         )}
@@ -609,7 +609,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         onChange={(e) => {
                                             field.handleChange(e.target.value);
                                         }}
-                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                        className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                         placeholder="Enter Responsibilities"
                                     ></textarea>
                                 </div>
@@ -647,21 +647,21 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
             <form.Field
                 className="flex flex-col gap-5"
-                name="employmentStartDate"
+                name="tentativeStartDate"
                 children={(field: any) => {
                     return (
                         <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">
-                                Employment Start Date
+                            <label htmlFor={field.name} className="text-sm text-gray-700">
+                                Tentative Start Date
                             </label>
                             <input
                                 id={field.name}
-                                type="date"
+                                type="month"
                                 name={field.name}
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                             />
                         </div>
                     );
@@ -675,7 +675,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                 children={(field: any) => {
                     return (
                         <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">
+                            <label htmlFor={field.name} className="text-sm text-gray-700">
                                 Application Deadline
                             </label>
                             <input
@@ -685,7 +685,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
                                 onChange={(e) => field.handleChange(e.target.value)}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                             />
                         </div>
                     );

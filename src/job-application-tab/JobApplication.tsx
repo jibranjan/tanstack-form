@@ -27,18 +27,12 @@ function JobApplication({ form }: JobApplicationProps) {
     ];
 
     const [fields, setFields] = useState<FieldType[]>([
-        // Important Fields
-        { id: 'first-name', name: 'First name', isMandatory: true, section: 'important' },
-        { id: 'last-name', name: 'Last name', isMandatory: true, section: 'important' },
-        { id: 'email', name: 'Email', isMandatory: true, section: 'important' },
-        { id: 'location', name: 'Location', isMandatory: false, section: 'important', allowChange: true },
-        { id: 'dob', name: 'DOB', isMandatory: false, section: 'important', allowChange: true },
-        
         // Other Fields
-        { id: 'skills', name: 'Skills', isMandatory: true, section: 'other' },
-        { id: 'current-salary', name: 'Current salary', isMandatory: true, section: 'other' },
+        { id: 'skills', name: 'Skills', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'cover-letter', name: 'Cover letter', isMandatory: false, section: 'other', allowChange: true },
         { id: 'expected-salary', name: 'Expected salary', isMandatory: false, section: 'other', allowChange: true },
         { id: 'notice-period', name: 'Notice period', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'languages-known', name: 'Languages known', isMandatory: false, section: 'other', allowChange: true },
     ]);
 
     const renderFieldSection = (section: 'important' | 'other') => {
@@ -145,29 +139,6 @@ function JobApplication({ form }: JobApplicationProps) {
                         />
                     ))}
                 </div>
-
-                {/* Assignee */}
-                <form.Field
-                    name="assignee"
-                    children={(field: any) => {
-                        return (
-                            <div>
-                                <label htmlFor="assignee" className="text-sm text-gray-700 font-light">Assignee</label>
-                                <select
-                                    id="assignee"
-                                    name="assignee"
-                                    value={field.state.value || ""}
-                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
-                                    onChange={(e) => field.handleChange(e.target.value)}
-                                    onBlur={field.handleBlur}
-                                >
-                                    <option value="john">John Doe</option>
-                                    <option value="jane">Jane Doe</option>
-                                </select>
-                            </div>
-                        )
-                    }}
-                />
             </div>
 
             {/* Candidate Fields */}
@@ -187,38 +158,16 @@ function JobApplication({ form }: JobApplicationProps) {
                         <span>Re-order Fields</span>
                     </div>
                 </div>
-                {/* Important Fields */}
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">Important Fields</h3>
-                    {renderFieldSection('important')}
-                </div>
 
                 {/* Other Fields */}
                 <div className="flex flex-col gap-2">
-                    <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">Other Fields</h3>
+                    <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">
+                        Other Fields
+                        <p className="text-xs text-gray-700 font-light mt-1">
+                            First name, last name and email are already added.
+                        </p>
+                    </h3>
                     {renderFieldSection('other')}
-                </div>
-
-                {/* Custom Fields */}
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-gray-700 text-sm bg-gray-100 p-2 rounded-lg">Custom Fields</h3>
-                    <div className="flex flex-col gap-2 p-2">
-                        {/* {customFields.map((field) => (
-                            <div key={field.id} className="flex items-center justify-between gap-2 col-span-1">
-                                <span>{field.name}</span>
-                            </div>
-                        ))} */}
-
-                        <div
-                            className="border border-dashed border-blue-900 rounded-lg px-5 py-0.5 flex items-center justify-center gap-2 text-blue-900 cursor-pointer bg-indigo-50 w-fit active:scale-95 transition-all duration-150 ease-in-out"
-                            onClick={() => {
-                                // Will have to show a swal, not doing it rn.
-                            }}
-                        >
-                            <span className="text-lg">+</span>
-                            <span className="text-sm">Create Custom Field</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 

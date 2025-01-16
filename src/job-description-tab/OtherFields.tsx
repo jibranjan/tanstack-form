@@ -8,7 +8,14 @@ function OtherFields({ form }: OtherFieldsProps) {
     const [attachCtaText, setAttachCtaText] = useState("Attach");
     const [attachments, setAttachments] = useState<File[]>([]);
 
+    const renderPreferredDegrees = true;
+
+    const [isDegreesOpen, setIsDegreesOpen] = useState(false);
+    const degrees = ["B.Tech", "B.Sc", "B.Com"];
+
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const [contactPersonRequired, setContactPersonRequired] = useState(false);
 
     const validateFile = (file: File) => {
         const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/png', 'image/jpeg'];
@@ -46,38 +53,14 @@ function OtherFields({ form }: OtherFieldsProps) {
         <section
             className="flex flex-col gap-3"    
         >
-            {/* Job Category */}
+            {/* Min Education Required */}
             <form.Field
-                name="jobCategory"
+                name="minEducationRequired"
                 children={(field: any) => {
                     return (
                         <div>
                             <label htmlFor={field.name} className="text-sm text-gray-700">
-                                Job Category
-                            </label>
-                            <input
-                                id={field.name}
-                                name={field.name}
-                                value={field.state.value || ""}
-                                onBlur={field.handleBlur}
-                                onChange={(e) => field.handleChange(e.target.value)}
-                                type="text"
-                                placeholder="Ex. Tech Team"
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
-                            />
-                        </div>
-                    )
-                }}
-            />
-
-            {/* Education Required */}
-            <form.Field
-                name="educationRequired"
-                children={(field: any) => {
-                    return (
-                        <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700">
-                                Education Required
+                                Min Education Required
                             </label>
                             <select 
                                 id={field.name}
@@ -88,16 +71,73 @@ function OtherFields({ form }: OtherFieldsProps) {
                                 className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
                             >
                                 <option value="" disabled>
-                                    Select Education
+                                    Select Min Education
                                 </option>
-                                <option value="B.Tech">B.Tech</option>
-                                <option value="B.Sc">B.Sc</option>
-                                <option value="B.Com">B.Com</option>
+                                <option value="post-graduation">Post Graduation</option>
+                                <option value="under-graduation">Under Graduation</option>
+                                <option value="high-school">High School</option>
                             </select>
                         </div>
                     )
                 }}
             />
+
+            {/* Preferred Degree */}
+            {/* We will have a conditional rendering here. Will recieve a var from backend that determines if we need to show this field or not. */}
+            {renderPreferredDegrees && (
+                <form.Field
+                    name="preferredDegree"
+                    children={(field: any) => {
+                        const selectedDegrees = field.state.value || [];
+
+                    return (
+                        <div className="relative">
+                            <label htmlFor={field.name} className="text-sm text-gray-700">
+                                Preferred Degrees
+                            </label>
+                            <button
+                                type="button"
+                                onClick={() => setIsDegreesOpen(!isDegreesOpen)}
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 pl-3 rounded-lg mt-1 text-left flex justify-between items-center"
+                            >
+                                <span>
+                                    {selectedDegrees.length 
+                                        ? `${selectedDegrees.length} degree${selectedDegrees.length > 1 ? 's' : ''} selected`
+                                        : 'Select Degrees'}
+                                </span>
+                                <svg className={`w-4 h-4 transition-transform ${isDegreesOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                                </svg>
+                            </button>
+                            
+                            {isDegreesOpen && (
+                                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden">
+                                    {degrees.map((degree) => (
+                                        <label 
+                                            key={degree}
+                                            className="flex items-center gap-2 px-3 py-2 hover:bg-gray-50 cursor-pointer"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                checked={selectedDegrees.includes(degree)}
+                                                onChange={(e) => {
+                                                    const newDegrees = e.target.checked
+                                                        ? [...selectedDegrees, degree]
+                                                        : selectedDegrees.filter(d => d !== degree);
+                                                    field.handleChange(newDegrees);
+                                                }}
+                                                className="w-4 h-4 accent-blue-900"
+                                            />
+                                            <span className="text-sm font-light text-gray-700">{degree}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )
+                    }}
+                />
+            )}
 
             {/* Perks */}
             <form.Field
@@ -142,29 +182,71 @@ function OtherFields({ form }: OtherFieldsProps) {
             />
 
             {/* Contact Person */}
-            <form.Field
-                name="contactPerson"
-                children={(field: any) => {
-                    return (
-                        <div>
-                            <label htmlFor={field.name} className="text-sm text-gray-700">
-                                Contact Person
-                            </label>
-                            <select 
-                                id={field.name}
-                                name={field.name}
-                                value={field.state.value || ""} 
-                                onBlur={field.handleBlur}
-                                onChange={(e) => field.handleChange(e.target.value)} 
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
-                            >
-                                <option value="John Doe">John Doe</option>
-                                <option value="Jane Doe">Jane Doe</option>
-                            </select>
-                        </div>
-                    )
-                }}
-            />
+            <div>
+                <span className="text-sm text-gray-700">Contact Person Required?</span>
+                <div className="flex items-center gap-3 mt-1">
+                    {['Yes', 'No'].map((option) => (
+                        <form.Field
+                            key={option}
+                            name="contactPerson"
+                            children={(field: any) => (
+                                <label className="text-sm items-center flex gap-1.5 font-light text-gray-700">
+                                    <input 
+                                        type="radio"
+                                        value={option}
+                                        name={field.name} 
+                                        onBlur={field.handleBlur}
+                                        checked={field.state.value === option}
+                                        onChange={(e) => {
+                                            field.handleChange(e.target.value);
+                                            setContactPersonRequired(option === 'Yes');
+                                        }}
+                                        className="w-4 h-4 accent-blue-900"
+                                    />
+                                    {option}
+                                </label>
+                            )}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Contact Person Dropdown */}
+            {/* if contact person is required, then we will show a dropdown here */}
+            {contactPersonRequired && (
+                <form.Field
+                    name="contactPerson"
+                    children={(field: any) => {
+                        return (
+                            <div>
+                                <label htmlFor={field.name} className="text-xs text-gray-600">
+                                    Choose from your team members.
+                                </label>
+                                <span className="text-xs text-gray-500 font-light ml-2">
+                                    (<a 
+                                        // href="" will be the link to teams page
+                                        className="text-xs text-blue-900 mr-1"
+                                    >
+                                        Click here
+                                    </a>
+                                    to add a new member.)
+                                </span>
+                                <select 
+                                    id={field.name}
+                                    name={field.name}
+                                    value={field.state.value || ""} 
+                                    onBlur={field.handleBlur}
+                                    onChange={(e) => field.handleChange(e.target.value)} 
+                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                >
+                                    <option value="John Doe">John Doe</option>
+                                    <option value="Jane Doe">Jane Doe</option>
+                                </select>
+                            </div>
+                        )
+                    }}
+                />
+            )}
 
             {/* Visa Sponsorship */}
             <div>
