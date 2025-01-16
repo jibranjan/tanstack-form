@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 interface JdUploadProps {
     form: any;
@@ -7,7 +7,8 @@ interface JdUploadProps {
 
 function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
     const [jdUploaded, setJdUploaded] = useState(false);
-    const [uploadedJdFile, setUploadedJdFile] = useState(false);
+    const [uploadedJdFile, setUploadedJdFile] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     return (
         <section className="flex flex-col gap-3 bg-white p-3 rounded-lg">
@@ -27,12 +28,10 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                             return (
                                 <>
                                     <label
-                                        className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out"
-                                        onClick={() => {
-                                            /* Handle upload */
-                                        }}
+                                        className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out cursor-pointer"
                                     >
                                         <input
+                                            ref={fileInputRef}
                                             id={field.name}
                                             name={field.name}
                                             type="file"
@@ -40,7 +39,7 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                                             accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
                                             onChange={(e) => {
                                                 setJdUploaded(true);
-                                                setUploadedJdFile(true);
+                                                setUploadedJdFile(e.target.files?.[0] || null);
                                                 field.handleChange(e.target.files);
                                             }}
                                             onBlur={field.handleBlur}
@@ -92,8 +91,35 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                 </div>
 
                 {uploadedJdFile && (
-                    <div className="flex items-center gap-2 mt-1">
-                        uploaded
+                    <div className="flex items-center justify-between gap-2 bg-indigo-50 px-3 py-2 rounded-lg mt-2">
+                        <div 
+                            className="flex items-center gap-2 cursor-pointer"
+                            onClick={() => {
+                                window.open(URL.createObjectURL(uploadedJdFile), '_blank');
+                            }}
+                        >
+                            <span className="text-sm font-light text-blue-600">
+                                {uploadedJdFile.name}
+                            </span>
+                            <span className="text-xs font-light text-gray-500">
+                                ({Math.round(uploadedJdFile.size / 1024)}KB)
+                            </span>
+                        </div>
+                        <button
+                            type="button"
+                            className="text-gray-400 hover:text-gray-600"
+                            onClick={() => {
+                                if (fileInputRef.current) {
+                                    fileInputRef.current.value = '';
+                                }
+                                setUploadedJdFile(null);
+                                setJdUploaded(false);
+                            }}
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
                     </div>
                 )}
 
