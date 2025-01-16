@@ -5,10 +5,14 @@ import ImportantFields from "./job-description-tab/ImportantFields.tsx"
 import OtherFields from "./job-description-tab/OtherFields.tsx"
 import JobApplication from "./job-application-tab/JobApplication.tsx"
 import JobCreationTabs from "./JobCreationTabs.tsx"
+import JdUpload from "./job-description-tab/JdUpload.tsx"
 
 function CreateJobPostForm() {
+    const allowJdUpload = true;
+
     const [activeTab, setActiveTab] = useState(0)
     const [uploadedTab, setUploadedTab] = useState(-1)
+    const [jdSubmitted, setJdSubmitted] = useState(false);
 
     const form = useForm({
         defaultValues: {
@@ -44,13 +48,20 @@ function CreateJobPostForm() {
                 <div className="flex flex-col gap-10">
                     {activeTab === 0 && (
                         <>
-                            <FieldAccordion fieldName="Important Fields">
-                                <ImportantFields form={form}  />
-                            </FieldAccordion>
+                            {allowJdUpload && !jdSubmitted && (
+                                <JdUpload form={form} setJdSubmitted={setJdSubmitted} />
+                            )}
+                            {(!allowJdUpload || jdSubmitted) && (
+                                <>
+                                    <FieldAccordion fieldName="Important Fields">
+                                        <ImportantFields form={form} />
+                                    </FieldAccordion>
 
-                            <FieldAccordion fieldName="Other Fields">
-                                <OtherFields form={form} />
-                            </FieldAccordion>
+                                    <FieldAccordion fieldName="Other Fields">
+                                        <OtherFields form={form} />
+                                    </FieldAccordion>
+                                </>
+                            )}
                         </>
                     )}
 
