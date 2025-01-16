@@ -12,109 +12,13 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
     return (
         <section className="flex flex-col gap-3">
-            {/* JD Upload */}
-            <div>
-                <span className="text-sm text-gray-700 eqp-required-field">
-                    Upload or provide link to JD
-                </span>
-
-                <div className="flex items-center gap-2 mt-1">
-                    <form.Field
-                        name="jdUpload"
-                        data-field-name="jobDescription"
-                        children={(field: any) => {
-                            return (
-                                <>
-                                    <label
-                                        className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out"
-                                        onClick={() => {
-                                            /* Handle upload */
-                                        }}
-                                    >
-                                        <input 
-                                            id={field.name}
-                                            name={field.name}
-                                            type="file"
-                                            data-field-name="jobDescription"
-                                            data-file-uploaded={false}
-                                            className="hidden req-input-field"
-                                            accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
-                                            onChange={(e) => {
-                                                field.handleChange(e.target.files);
-                                                e.target.setAttribute('data-file-uploaded', 'true');
-                                            }}
-                                            onBlur={field.handleBlur}
-                                        />
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            strokeWidth={1.5}
-                                            stroke="currentColor"
-                                            className="w-4 h-4"
-                                        >
-                                            <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"
-                                            />
-                                        </svg>
-
-                                        Upload
-                                    </label>
-                                </>
-                            )
-                        }}
-                    />
-
-                    <span className="text-sm font-light text-gray-500">or</span>
-
-                    <form.Field
-                        name="jdLink"
-                        children={(field: any) => {
-                            return (
-                                <input
-                                    id={field.name}
-                                    data-field-name="jobDescription"
-                                    name={field.name}
-                                    value={field.state.value || ""}
-                                    onBlur={field.handleBlur}
-                                    onChange={(e) => {
-                                        field.handleChange(e.target.value);
-                                    }}
-                                    type="url"
-                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
-                                    placeholder="https://job.example.co/post=1"
-                                />
-                            )
-                        }}
-                    />
-                </div>
-            </div>
-
-            {/* AI Auto Populate */}
-            <div className="flex items-center gap-2 cursor-pointer w-fit ml-auto absolute right-2 top-36 active:scale-95 transition-all duration-150 ease-in-out">
-                <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M8.25005 3L7.87505 2.25L7.50005 3L6.75005 3.09375L7.37555 3.62475L7.12505 4.5L7.87505 4.0005L8.62505 4.5L8.37455 3.62475L9.00005 3.09375L8.25005 3ZM14.5005 10.9995L13.875 9.75L13.2495 10.9995L12 11.1562L13.0418 12.042L12.6255 13.5L13.875 12.6667L15.1245 13.5L14.7083 12.042L15.75 11.1562L14.5005 10.9995ZM5.0003 4.74975L4.50005 3.75L3.9998 4.74975L3.00005 4.875L3.8333 5.583L3.5003 6.75L4.50005 6.08325L5.4998 6.75L5.1668 5.583L6.00005 4.875L5.0003 4.74975ZM2.56055 12.75C2.56055 13.1505 2.71655 13.527 3.00005 13.8105L4.18955 15C4.47305 15.2835 4.84955 15.4395 5.25005 15.4395C5.65055 15.4395 6.02705 15.2835 6.31055 15L15 6.3105C15.2835 6.027 15.4395 5.6505 15.4395 5.25C15.4395 4.8495 15.2835 4.473 15 4.1895L13.8105 3C13.2435 2.433 12.2565 2.433 11.6895 3L3.00005 11.6895C2.71655 11.973 2.56055 12.3495 2.56055 12.75ZM12.75 4.0605L13.9395 5.25L11.25 7.9395L10.0605 6.75L12.75 4.0605Z"
-                        fill="#3B82F6"
-                    />
-                </svg>
-                <span className="text-sm text-blue-500">Auto-populate</span>
-            </div>
-
             {/* Job Title */}
             <form.Field
                 className="flex flex-col gap-5"
                 name="jobTitle"
                 children={(field: any) => {
                     return (
-                        <div className="mt-10">
+                        <div className="">
                             <label
                                 htmlFor={field.name}
                                 className="text-sm text-gray-700 mt-7 eqp-required-field"
