@@ -1,5 +1,5 @@
 import { useState } from "react";
-import OtherFields from "./OtherFields.tsx";
+import RenderFieldSection from "./RenderFieldSection.tsx";
 
 interface JobApplicationProps {
     form: any;
@@ -98,7 +98,7 @@ function JobApplication({ form }: JobApplicationProps) {
                             First name, last name and email are already added.
                         </p>
                     </h3>
-                    <OtherFields 
+                    <RenderFieldSection 
                         form={form}
                         fields={fields} 
                         section="other"

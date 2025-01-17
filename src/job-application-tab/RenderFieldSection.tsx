@@ -1,13 +1,11 @@
-import { useState } from "react";
-
-interface OtherFieldsProps {
+interface RenderFieldSectionProps {
     form: any;
     fields: any;
     section: 'important' | 'other';
     setFields: (fields: any) => void;
 }
 
-function OtherFields({ form, fields, section, setFields }: OtherFieldsProps) {
+function RenderFieldSection({ form, fields, section, setFields }: RenderFieldSectionProps) {
     return (
         <div className="grid grid-cols-2 gap-x-5 gap-y-2 p-2">
             {fields.filter((fld: any) => fld.section === section).map((fld: any) => {
@@ -76,4 +74,4 @@ function OtherFields({ form, fields, section, setFields }: OtherFieldsProps) {
     );
 }
 
-export default OtherFields;
+export default RenderFieldSection;
