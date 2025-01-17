@@ -35,12 +35,15 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                                             id={field.name}
                                             name={field.name}
                                             type="file"
-                                            className="hidden"
+                                            className="hidden req-input-field"
+                                            data-field-name="jobDescription"
+                                            data-file-uploaded="false"
                                             accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
                                             onChange={(e) => {
                                                 setJdUploaded(true);
                                                 setUploadedJdFile(e.target.files?.[0] || null);
                                                 field.handleChange(e.target.files);
+                                                e.target.setAttribute('data-file-uploaded', 'true');
                                             }}
                                             onBlur={field.handleBlur}
                                         />
@@ -77,12 +80,13 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                                     name={field.name}
                                     value={field.state.value || ""}
                                     onBlur={field.handleBlur}
+                                    data-field-name="jobDescription"
                                     onChange={(e) => {
                                         setJdUploaded(true);
                                         field.handleChange(e.target.value);
                                     }}
                                     type="url"
-                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                     placeholder="https://job.example.co/post=1"
                                 />
                             )
@@ -134,11 +138,12 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                                 name={field.name}
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
+                                data-field-name="jobDescription"
                                 onChange={(e) => {
                                     setJdUploaded(true);
                                     field.handleChange(e.target.value);
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
                                 placeholder="Paste your JD here..."
                             />
                         )
@@ -148,6 +153,7 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
 
             {/* Submit to Parse */}
             <div 
+                data-jd-submitted="false"
                 className={`text-sm bg-blue-900 text-white px-3 py-2 rounded-lg cursor-pointer w-fit ml-auto active:scale-95 transition-all duration-150 ease-in-out ${jdUploaded ? "cursor-pointer" : "cursor-not-allowed"}`}
                 title={jdUploaded ? "Submit to Parse" : "Please upload or paste your JD first"}
                 onClick={(e) => {
@@ -157,6 +163,7 @@ function JdUpload({ form, setJdSubmitted }: JdUploadProps) {
                     (e.target as HTMLElement).classList.add("cursor-not-allowed");
                     (e.target as HTMLElement).classList.remove("active:scale-95");
                     (e.target as HTMLElement).textContent = "Parsing...";
+                    (e.target as HTMLElement).setAttribute('data-jd-submitted', 'true');
                     setJdSubmitted(true);
                 }}
             >

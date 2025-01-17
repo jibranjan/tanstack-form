@@ -603,7 +603,8 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     setFilterSkillsInput(e.target.value);
                                     field.handleChange(e.target.value);
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 outline-none border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
+                                data-field-name="skills"
+                                className="text-sm font-light text-gray-500 ring-0 outline-none border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
                                 placeholder="Enter Skills"
                             />
 
@@ -626,7 +627,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             {skill.label}
                                         </li>
                                     ))}
-                                    
+
                                     {/* If no matching skills found */}
                                     {skills.filter((skill) => 
                                         skill.label.toLowerCase().includes(filterSkillsInput.toLowerCase())
@@ -638,7 +639,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                 </ul>
                             )}
 
-                            <div className="flex flex-wrap gap-2 mt-1">
+                            <div id="skills-selected" className="flex flex-wrap gap-2 mt-1">
                                 {selectedSkills.map((skill) => (
                                     <div
                                         key={skill}
@@ -661,42 +662,6 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                     );
                 }}
             />
-
-            {/* Skills */}
-            {/* <form.Field
-                className="flex flex-col gap-5"
-                name="skills"
-                children={(field: any) => {
-                    return (
-                        <div>
-                            <label
-                                htmlFor={field.name}
-                                className="text-sm text-gray-700 eqp-required-field"
-                            >
-                                Skills
-                            </label>
-                            <select
-                                id={field.name}
-                                name={field.name}
-                                value={field.state.value || ""}
-                                onBlur={field.handleBlur}
-                                onChange={(e) => {
-                                    field.handleChange(e.target.value);
-                                }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
-                            >
-                                <option value="" disabled>
-                                    Select Skills
-                                </option>
-                                <option value="Python">Python</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="React">React</option>
-                                <option value="Node.js">Node.js</option>
-                            </select>
-                        </div>
-                    );
-                }}
-            /> */}
 
             {/* Job Description */}
             <form.Field

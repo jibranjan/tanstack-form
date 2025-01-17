@@ -10,13 +10,16 @@ interface JobCreationTabsProps {
 const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab }: JobCreationTabsProps) => {
 
     const checkForJobDescriptionUpload = (field: any) => {
+        const jdSubmitted = document.querySelector('[data-jd-submitted]')?.getAttribute('data-jd-submitted') === 'true';
+
         let jobDescriptionUploaded = false;
         if (field.hasAttribute('data-file-uploaded') && field.getAttribute('data-file-uploaded') === 'true') {
             jobDescriptionUploaded = true;
         } else if (!field.hasAttribute('data-file-uploaded')) {
             jobDescriptionUploaded = field.value !== undefined && field.value !== "";
         }
-        return jobDescriptionUploaded;
+
+        return jobDescriptionUploaded && jdSubmitted;
     }
 
     const validateFields = () => {
@@ -31,11 +34,17 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                     jdUploaded = checkForJobDescriptionUpload(field);
                 }
                 hasEmptyFields = !jdUploaded;
+            } else if (field.getAttribute('data-field-name') === 'skills') {
+                if (document.getElementById('skills-selected')?.children.length === 0) {
+                    hasEmptyFields = true;
+                } else {
+                    hasEmptyFields = false;
+                }
             } else if (field.value === undefined || field.value === "") {
                 hasEmptyFields = true;
             }
         })
-        return !hasEmptyFields && jdUploaded;
+        return !hasEmptyFields;
     };
 
     const TAB_CONTENT = [
