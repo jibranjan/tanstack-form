@@ -9,6 +9,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
     const [locations, setLocations] = useState<string[]>([""]);
     const [responsibilities, setResponsibilities] = useState<string[]>([""]);
     const [roleType, setRoleType] = useState<string>("");
+    const [restrictedLocation, setRestrictedLocation] = useState<boolean>(false);
 
     const timezones = [
         { id: "utc", label: "UTC (Coordinated Universal Time)" },
@@ -138,185 +139,215 @@ function ImportantFields({ form }: ImportantFieldsProps) {
             {/* Location */}
             <div>
                 <span className={`text-sm text-gray-700 ${roleType !== 'Remote' ? 'eqp-required-field' : ''}`}>
-                    {roleType === 'Remote' ? 'Restricted Location' : 'Location(s)'}
-                </span>
-                <div>
-                    {locations.map((loc, locIndex) => (
+                    {roleType !== 'Remote' ? 'Location(s)' : ''}
+                    {roleType === 'Remote' && (
                         <form.Field
-                            key={loc + locIndex}
-                            name={`location${locIndex}`}
+                            name="restrictedLocation"
                             children={(field: any) => {
                                 return (
-                                    <div>
-                                        <select
+                                    <label
+                                        htmlFor={field.name}
+                                        className="flex items-center gap-2"
+                                    >
+                                        <input
+                                            type="checkbox"
                                             name={field.name}
-                                            value={field.state.value || ""}
-                                            className={`text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 ${field.state.value ? 'req-input-field' : ''}`}
                                             onBlur={field.handleBlur}
+                                            checked={field.state.value || false}
                                             onChange={(e) => {
-                                                field.handleChange(e.target.value);
-                                                setLocations((prev) =>
-                                                    prev.map((location, index) =>
-                                                        index === locIndex ? e.target.value : location
-                                                    )
-                                                );
+                                                setRestrictedLocation(e.target.checked);
+                                                field.handleChange(e.target.checked);
                                             }}
-                                        >
-                                            <option value="" disabled>
-                                                Select Country
-                                            </option>
-                                            <option
-                                                value="United States"
-                                                disabled={locations.includes("United States")}
-                                            >
-                                                United States
-                                            </option>
-                                            <option
-                                                value="Canada"
-                                                disabled={locations.includes("Canada")}
-                                            >
-                                                Canada
-                                            </option>
-                                            <option
-                                                value="United Kingdom"
-                                                disabled={locations.includes("United Kingdom")}
-                                            >
-                                                United Kingdom
-                                            </option>
-                                        </select>
+                                            className="w-3 h-3 accent-blue-900 cursor-pointer"
+                                        />
 
-                                        <div className="flex flex-wrap gap-2 mt-1">
-                                            {cities.map((city) => (
-                                                <div
-                                                    key={city}
-                                                    className="flex items-center gap-2 bg-blue-50 text-blue-900 px-3 py-0.5 rounded-full text-xs border border-blue-200 w-fit"
-                                                >
-                                                    <span>{city}</span>
-                                                    <span
-                                                        className="font-light text-base rotate-45 cursor-pointer"
-                                                        onClick={() => {
-                                                            const newCities = cities.filter(
-                                                                (c) => c !== city
-                                                            );
-                                                            setCities(newCities);
-                                                        }}
-                                                    >
-                                                        +
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        {field.state.value && (
-                                            <>
-                                                <form.Field
-                                                    name="city"
-                                                    children={(field: any) => {
-                                                        return (
-                                                            <select
-                                                                value=""
-                                                                data-value={field.state.value}
-                                                                className="text-sm mt-1.5 font-light text-gray-700 w-20 outline-none"
-                                                                onBlur={field.handleBlur}
-                                                                onChange={(e) => {
-                                                                    setCities((prevCities: string[]) => {
-                                                                        const newCities = [...prevCities];
-                                                                        newCities.push(e.target.value);
-                                                                        return newCities;
-                                                                    });
-                                                                }}
-                                                            >
-                                                                <option value="" disabled>
-                                                                    Add City
-                                                                </option>
-                                                                <option
-                                                                    value="Srinagar"
-                                                                    disabled={cities.includes("Srinagar")}
-                                                                >
-                                                                    Srinagar
-                                                                </option>
-                                                                <option
-                                                                    value="Toronto"
-                                                                    disabled={cities.includes("Toronto")}
-                                                                >
-                                                                    Toronto
-                                                                </option>
-                                                                <option
-                                                                    value="London"
-                                                                    disabled={cities.includes("London")}
-                                                                >
-                                                                    London
-                                                                </option>
-                                                                <option
-                                                                    value="New York"
-                                                                    disabled={cities.includes("New York")}
-                                                                >
-                                                                    New York
-                                                                </option>
-                                                                <option
-                                                                    value="San Francisco"
-                                                                    disabled={cities.includes(
-                                                                        "San Francisco"
-                                                                    )}
-                                                                >
-                                                                    San Francisco
-                                                                </option>
-                                                                <option
-                                                                    value="Los Angeles"
-                                                                    disabled={cities.includes("Los Angeles")}
-                                                                >
-                                                                    Los Angeles
-                                                                </option>
-                                                                <option
-                                                                    value="Chicago"
-                                                                    disabled={cities.includes("Chicago")}
-                                                                >
-                                                                    Chicago
-                                                                </option>
-                                                                <option
-                                                                    value="Houston"
-                                                                    disabled={cities.includes("Houston")}
-                                                                >
-                                                                    Houston
-                                                                </option>
-                                                                <option
-                                                                    value="Miami"
-                                                                    disabled={cities.includes("Miami")}
-                                                                >
-                                                                    Miami
-                                                                </option>
-                                                                <option
-                                                                    value="Seattle"
-                                                                    disabled={cities.includes("Seattle")}
-                                                                >
-                                                                    Seattle
-                                                                </option>
-                                                                <option
-                                                                    value="Boston"
-                                                                    disabled={cities.includes("Boston")}
-                                                                >
-                                                                    Boston
-                                                                </option>
-                                                                <option
-                                                                    value="Washington D.C."
-                                                                    disabled={cities.includes(
-                                                                        "Washington D.C."
-                                                                    )}
-                                                                >
-                                                                    Washington D.C.
-                                                                </option>
-                                                            </select>
-                                                        );
-                                                    }}
-                                                />
-                                            </>
-                                        )}
-                                    </div>
+                                        Restricted Location
+                                    </label>
                                 );
                             }}
                         />
-                    ))}
-                </div>
+                    )}
+                </span>
+
+                {((roleType === 'Remote' && restrictedLocation) || (roleType !== 'Remote')) && (
+                    <div className={`${roleType === 'Remote' ? 'mx-5 mt-1' : ''}`}>
+                        {locations.map((loc, locIndex) => (
+                            <form.Field
+                                key={loc + locIndex}
+                                name={`location${locIndex}`}
+                                children={(field: any) => {
+                                    return (
+                                        <div>
+                                            <select
+                                                name={field.name}
+                                                value={field.state.value || ""}
+                                                className={`text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 ${field.state.value ? 'req-input-field' : ''}`}
+                                                onBlur={field.handleBlur}
+                                                onChange={(e) => {
+                                                    field.handleChange(e.target.value);
+                                                    setLocations((prev) =>
+                                                        prev.map((location, index) =>
+                                                            index === locIndex ? e.target.value : location
+                                                        )
+                                                    );
+                                                }}
+                                            >
+                                                <option value="" disabled>
+                                                    Select Country
+                                                </option>
+                                                <option
+                                                    value="United States"
+                                                    disabled={locations.includes("United States")}
+                                                >
+                                                    United States
+                                                </option>
+                                                <option
+                                                    value="Canada"
+                                                    disabled={locations.includes("Canada")}
+                                                >
+                                                    Canada
+                                                </option>
+                                                <option
+                                                    value="United Kingdom"
+                                                    disabled={locations.includes("United Kingdom")}
+                                                >
+                                                    United Kingdom
+                                                </option>
+                                            </select>
+
+                                            <div className="flex flex-wrap gap-2 mt-1">
+                                                {cities.map((city) => (
+                                                    <div
+                                                        key={city}
+                                                        className="flex items-center gap-2 bg-blue-50 text-blue-900 px-3 py-0.5 rounded-full text-xs border border-blue-200 w-fit"
+                                                    >
+                                                        <span>{city}</span>
+                                                        <span
+                                                            className="font-light text-base rotate-45 cursor-pointer"
+                                                            onClick={() => {
+                                                                const newCities = cities.filter(
+                                                                    (c) => c !== city
+                                                                );
+                                                                setCities(newCities);
+                                                            }}
+                                                        >
+                                                            +
+                                                        </span>
+                                                    </div>
+                                                ))}
+                                            </div>
+
+                                            {field.state.value && (
+                                                <>
+                                                    <form.Field
+                                                        name="city"
+                                                        children={(field: any) => {
+                                                            return (
+                                                                <select
+                                                                    value=""
+                                                                    data-value={field.state.value}
+                                                                    className="text-sm mt-1.5 font-light text-gray-700 w-20 outline-none"
+                                                                    onBlur={field.handleBlur}
+                                                                    onChange={(e) => {
+                                                                        setCities((prevCities: string[]) => {
+                                                                            const newCities = [...prevCities];
+                                                                            newCities.push(e.target.value);
+                                                                            return newCities;
+                                                                        });
+                                                                    }}
+                                                                >
+                                                                    <option value="" disabled>
+                                                                        Add City
+                                                                    </option>
+                                                                    <option
+                                                                        value="Srinagar"
+                                                                        disabled={cities.includes("Srinagar")}
+                                                                    >
+                                                                        Srinagar
+                                                                    </option>
+                                                                    <option
+                                                                        value="Toronto"
+                                                                        disabled={cities.includes("Toronto")}
+                                                                    >
+                                                                        Toronto
+                                                                    </option>
+                                                                    <option
+                                                                        value="London"
+                                                                        disabled={cities.includes("London")}
+                                                                    >
+                                                                        London
+                                                                    </option>
+                                                                    <option
+                                                                        value="New York"
+                                                                        disabled={cities.includes("New York")}
+                                                                    >
+                                                                        New York
+                                                                    </option>
+                                                                    <option
+                                                                        value="San Francisco"
+                                                                        disabled={cities.includes(
+                                                                            "San Francisco"
+                                                                        )}
+                                                                    >
+                                                                        San Francisco
+                                                                    </option>
+                                                                    <option
+                                                                        value="Los Angeles"
+                                                                        disabled={cities.includes("Los Angeles")}
+                                                                    >
+                                                                        Los Angeles
+                                                                    </option>
+                                                                    <option
+                                                                        value="Chicago"
+                                                                        disabled={cities.includes("Chicago")}
+                                                                    >
+                                                                        Chicago
+                                                                    </option>
+                                                                    <option
+                                                                        value="Houston"
+                                                                        disabled={cities.includes("Houston")}
+                                                                    >
+                                                                        Houston
+                                                                    </option>
+                                                                    <option
+                                                                        value="Miami"
+                                                                        disabled={cities.includes("Miami")}
+                                                                    >
+                                                                        Miami
+                                                                    </option>
+                                                                    <option
+                                                                        value="Seattle"
+                                                                        disabled={cities.includes("Seattle")}
+                                                                    >
+                                                                        Seattle
+                                                                    </option>
+                                                                    <option
+                                                                        value="Boston"
+                                                                        disabled={cities.includes("Boston")}
+                                                                    >
+                                                                        Boston
+                                                                    </option>
+                                                                    <option
+                                                                        value="Washington D.C."
+                                                                        disabled={cities.includes(
+                                                                            "Washington D.C."
+                                                                        )}
+                                                                    >
+                                                                        Washington D.C.
+                                                                    </option>
+                                                                </select>
+                                                            );
+                                                        }}
+                                                    />
+                                                </>
+                                            )}
+                                        </div>
+                                    );
+                                }}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 {roleType !== 'Remote' && (
                     <button
