@@ -10,6 +10,28 @@ function ImportantFields({ form }: ImportantFieldsProps) {
     const [responsibilities, setResponsibilities] = useState<string[]>([""]);
     const [roleType, setRoleType] = useState<string>("");
 
+    const timezones = [
+        { id: "utc", label: "UTC (Coordinated Universal Time)" },
+        { id: "gmt", label: "GMT (Greenwich Mean Time)" },
+        { id: "est", label: "EST (Eastern Standard Time)" },
+        { id: "cst", label: "CST (Central Standard Time)" },
+        { id: "mst", label: "MST (Mountain Standard Time)" },
+        { id: "pst", label: "PST (Pacific Standard Time)" },
+        { id: "ist", label: "IST (Indian Standard Time)" },
+        { id: "cet", label: "CET (Central European Time)" },
+        { id: "eet", label: "EET (Eastern European Time)" },
+        { id: "aest", label: "AEST (Australian Eastern Standard Time)" },
+        { id: "acst", label: "ACST (Australian Central Standard Time)" },
+        { id: "hst", label: "HST (Hawaii Standard Time)" },
+        { id: "akst", label: "AKST (Alaska Standard Time)" },
+        { id: "jst", label: "JST (Japan Standard Time)" },
+        { id: "kst", label: "KST (Korea Standard Time)" },
+        { id: "nzst", label: "NZST (New Zealand Standard Time)" },
+        { id: "bst", label: "BST (British Summer Time)" },
+        { id: "aedt", label: "AEDT (Australian Eastern Daylight Time)" },
+        { id: "ast", label: "AST (Atlantic Standard Time)" }
+    ];
+
 
     return (
         <section className="flex flex-col gap-3">
@@ -62,7 +84,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     <span className="flex items-center gap-1.5">
                                         <input
                                             id={option.id}
-                                            className="w-4 h-4 accent-blue-900 req-input-field"
+                                            className="w-4 h-4 accent-blue-900 cursor-pointer req-input-field"
                                             type="radio"
                                             name={field.name}
                                             value={option.label}
@@ -75,7 +97,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         />
                                         <label
                                             htmlFor={option.id}
-                                            className="text-sm font-light text-gray-700"
+                                            className="text-sm font-light text-gray-700 cursor-pointer"
                                         >
                                             {option.label}
                                         </label>
@@ -115,8 +137,8 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
             {/* Location */}
             <div>
-                <span className="text-sm text-gray-700 eqp-required-field">
-                    Location(s)
+                <span className={`text-sm text-gray-700 ${roleType !== 'Remote' ? 'eqp-required-field' : ''}`}>
+                    {roleType === 'Remote' ? 'Restricted Location' : 'Location(s)'}
                 </span>
                 <div>
                     {locations.map((loc, locIndex) => (
@@ -129,7 +151,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                         <select
                                             name={field.name}
                                             value={field.state.value || ""}
-                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 req-input-field"
+                                            className={`text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 ${field.state.value ? 'req-input-field' : ''}`}
                                             onBlur={field.handleBlur}
                                             onChange={(e) => {
                                                 field.handleChange(e.target.value);
@@ -296,23 +318,103 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                     ))}
                 </div>
 
-                <button
-                    disabled={locations.some((loc) => loc === "")}
-                    title={
-                        locations.some((loc) => loc === "")
-                            ? "Please add at least one country"
-                            : ""
-                    }
-                    className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : "active:scale-95 transition-all duration-150 ease-in-out"
-                        }`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setLocations((prev) => [...prev, ""]);
-                    }}
-                >
-                    Add Country +
-                </button>
+                {roleType !== 'Remote' && (
+                    <button
+                        disabled={locations.some((loc) => loc === "")}
+                        title={
+                            locations.some((loc) => loc === "")
+                                ? "Please add at least one country"
+                                : ""
+                        }
+                        className={`text-sm text-blue-500 mt-2 block ${locations.some((loc) => loc === "") ? "opacity-50" : "active:scale-95 transition-all duration-150 ease-in-out"
+                            }`}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setLocations((prev) => [...prev, ""]);
+                        }}
+                    >
+                        Add Country +
+                    </button>
+                )}
             </div>
+
+            {/* Timezone Restriction if role type is Remote */}
+            {roleType === 'Remote' && (
+                <form.Field
+                    name="timezoneRestriction"
+                    children={(field: any) => {
+                        return (
+                            <>
+                                <label htmlFor={field.name} className="text-sm text-gray-700 flex items-center gap-2 w-fit cursor-pointer">
+                                    <input
+                                        id={field.name}
+                                        name={field.name}
+                                        onBlur={field.handleBlur}
+                                        checked={field.state.value || false}
+                                        onChange={(e) => field.handleChange(e.target.checked)}
+                                        type="checkbox"
+                                        className="w-3 h-3 accent-blue-900 cursor-pointer"
+                                    />
+                                    Timezone Restriction
+                                </label>
+
+                                {field.state.value && (
+                                    <div className="flex max-sm:flex-col gap-2 sm:items-center mx-5 text-sm font-light text-gray-700">
+                                        <form.Field
+                                            name="timezoneRestrictionHours"
+                                            children={(field: any) => {
+                                                return (
+                                                    <label
+                                                        htmlFor={field.name}
+                                                        className="flex items-center gap-2"
+                                                    >
+                                                        <span className="max-sm:w-14 inline-block text-center">+/-</span>
+                                                        <input
+                                                            type="number"
+                                                            name={field.name}
+                                                            value={field.state.value || ""}
+                                                            onBlur={field.handleBlur}
+                                                            onChange={(e) => field.handleChange(e.target.value)}
+                                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-20 py-1.5 px-2 rounded-lg"
+                                                            placeholder="Ex: 5"
+                                                        />
+                                                    </label>
+                                                );
+                                            }}
+                                        />
+
+                                        <form.Field
+                                            name="timezoneRestrictionLocation"
+                                            children={(field: any) => {
+                                                return (
+                                                    <div className="flex items-center gap-2 w-full">
+                                                        <label htmlFor={field.name} className="max-sm:w-14 inline-block whitespace-nowrap">
+                                                            hours of
+                                                        </label>
+                                                        <select
+                                                            name={field.name}
+                                                            value={field.state.value || ""}
+                                                            className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full max-w-52 py-1.5 px-2 rounded-lg"
+                                                            onBlur={field.handleBlur}
+                                                            onChange={(e) => field.handleChange(e.target.value)}
+                                                        >
+                                                            {timezones.map((timezone) => (
+                                                                <option key={timezone.id} value={timezone.id}>
+                                                                    {timezone.label}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                );
+                                            }}
+                                        />
+                                    </div>
+                                )}
+                            </>
+                        );
+                    }}
+                />
+            )}
 
             {/* Job type */}
             <form.Field
