@@ -10,6 +10,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
     const [responsibilities, setResponsibilities] = useState<string[]>([""]);
     const [roleType, setRoleType] = useState<string>("");
     const [restrictedLocation, setRestrictedLocation] = useState<boolean>(false);
+    const [allowCountryRemoval, setAllowCountryRemoval] = useState<boolean>(false);
 
     const timezones = [
         { id: "utc", label: "UTC (Coordinated Universal Time)" },
@@ -173,47 +174,77 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                     <div className={`${roleType === 'Remote' ? 'mx-5 mt-1' : ''}`}>
                         {locations.map((loc, locIndex) => (
                             <form.Field
-                                key={loc + locIndex}
+                                key={loc}
                                 name={`location${locIndex}`}
                                 children={(field: any) => {
                                     return (
                                         <div>
-                                            <select
-                                                name={field.name}
-                                                value={field.state.value || ""}
-                                                className={`text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 ${field.state.value ? 'req-input-field' : ''}`}
-                                                onBlur={field.handleBlur}
-                                                onChange={(e) => {
-                                                    field.handleChange(e.target.value);
-                                                    setLocations((prev) =>
-                                                        prev.map((location, index) =>
-                                                            index === locIndex ? e.target.value : location
-                                                        )
-                                                    );
-                                                }}
-                                            >
-                                                <option value="" disabled>
-                                                    Select Country
-                                                </option>
-                                                <option
-                                                    value="United States"
-                                                    disabled={locations.includes("United States")}
+                                            <div className="flex items-center justify-between gap-2">
+                                                <select
+                                                    name={field.name}
+                                                    value={loc ?? field.state.value ?? ""}
+                                                    className={`text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg mt-1 ${((roleType === 'Remote' && restrictedLocation) || (roleType !== 'Remote')) ? 'req-input-field' : ''}`}
+                                                    onBlur={field.handleBlur}
+                                                    onChange={(e) => {
+                                                        field.handleChange(e.target.value);
+                                                        setLocations((prev) =>
+                                                            prev.map((location, index) =>
+                                                                index === locIndex ? e.target.value : location
+                                                            )
+                                                        );
+                                                    }}
                                                 >
-                                                    United States
-                                                </option>
-                                                <option
-                                                    value="Canada"
-                                                    disabled={locations.includes("Canada")}
-                                                >
-                                                    Canada
-                                                </option>
-                                                <option
-                                                    value="United Kingdom"
-                                                    disabled={locations.includes("United Kingdom")}
-                                                >
-                                                    United Kingdom
-                                                </option>
-                                            </select>
+                                                    <option value="" disabled>
+                                                        Select Country
+                                                    </option>
+                                                    <option
+                                                        value="United States"
+                                                        disabled={locations.includes("United States")}
+                                                    >
+                                                        United States
+                                                    </option>
+                                                    <option
+                                                        value="Canada"
+                                                        disabled={locations.includes("Canada")}
+                                                    >
+                                                        Canada
+                                                    </option>
+                                                    <option
+                                                        value="United Kingdom"
+                                                        disabled={locations.includes("United Kingdom")}
+                                                    >
+                                                        United Kingdom
+                                                    </option>
+                                                    <option
+                                                        value="China"
+                                                        disabled={locations.includes("China")}
+                                                    >
+                                                        China
+                                                    </option>
+                                                    <option
+                                                        value="India"
+                                                        disabled={locations.includes("India")}
+                                                    >
+                                                        India
+                                                    </option>
+                                                </select>
+                                                {allowCountryRemoval && locIndex > 0 && (roleType !== 'Remote') && (
+                                                    <svg 
+                                                        className="w-5 text-gray-500 cursor-pointer"
+                                                        onClick={() => {
+                                                            setLocations((prev) => {
+                                                                const newLocations = prev.filter((_, index) => {
+                                                                    return index !== locIndex;
+                                                                });
+                                                                return newLocations;
+                                                            });
+                                                        }}
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
+                                                )}
+                                            </div>
 
                                             <div className="flex flex-wrap gap-2 mt-1">
                                                 {cities.map((city) => (
@@ -362,6 +393,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                         onClick={(e) => {
                             e.preventDefault();
                             setLocations((prev) => [...prev, ""]);
+                            setAllowCountryRemoval(true);
                         }}
                     >
                         Add Country +

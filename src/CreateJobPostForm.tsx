@@ -8,7 +8,7 @@ import JobCreationTabs from "./JobCreationTabs.tsx"
 import JdUpload from "./job-description-tab/JdUpload.tsx"
 
 function CreateJobPostForm() {
-    const allowJdUpload = true;
+    const allowJdUpload = false;
 
     const [activeTab, setActiveTab] = useState(0)
     const [uploadedTab, setUploadedTab] = useState(-1)
