@@ -36,7 +36,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
         { id: "ast", label: "AST (Atlantic Standard Time)" }
     ];
 
-    const skills = [
+    const [skills, setSkills] = useState<{ id: string, label: string }[]>([
         { id: "cpp", label: "C++" },
         { id: "git", label: "Git" },
         { id: "english", label: "English Language" },
@@ -47,11 +47,9 @@ function ImportantFields({ form }: ImportantFieldsProps) {
         { id: "css", label: "CSS" },
         { id: "sql", label: "SQL" },
         { id: "programming", label: "Programming Languages" }
-    ]
+    ]);
 
-    const searchSkillsDropdown = (value: string) => {
-
-    }
+    const [filterSkillsInput, setFilterSkillsInput] = useState<string>("");
 
     return (
         <section className="flex flex-col gap-3">
@@ -591,7 +589,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                             <label htmlFor={field.name} className="text-sm text-gray-700 eqp-required-field">Skills</label>
                             <input
                                 type="text"
-                                value=""
+                                defaultValue=""
                                 onBlur={(e) => {
                                     field.handleBlur;
                                     e.target.classList.remove('rounded-b-none', 'border-b-0');
@@ -602,7 +600,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                     e.target.classList.add('rounded-b-none', 'border-b-0');
                                 }}
                                 onChange={(e) => {
-                                    searchSkillsDropdown(e.target.value);
+                                    setFilterSkillsInput(e.target.value);
                                     field.handleChange(e.target.value);
                                 }}
                                 className="text-sm font-light text-gray-500 ring-0 outline-none border border-gray-300 w-full py-2 px-3 rounded-lg mt-1"
@@ -611,23 +609,33 @@ function ImportantFields({ form }: ImportantFieldsProps) {
 
                             {showSkillsDropdown && (
                                 <ul className="flex flex-col border border-gray-300 divide-y divide-gray-300 rounded-lg rounded-t-none overflow-hidden">
-                                {skills.map((skill) => (
-                                    selectedSkills.includes(skill.label) ? null : (
+                                    {skills
+                                    .filter((skill) => skill.label.toLowerCase().includes(filterSkillsInput.toLowerCase()))
+                                    .map((skill) => (
                                         <li 
                                             key={skill.id}
-                                            onMouseDown={(e) => {
+                                            onMouseDown={() => {
                                                 const newSkills = [...selectedSkills, skill.label];
                                                 setSelectedSkills(newSkills);
-                                                field.handleChange(newSkills); // Update with the new array immediately
+                                                field.handleChange(newSkills);
+                                                setSkills(skills.filter((s) => s.label !== skill.label));
                                                 setShowSkillsDropdown(false);
                                             }}
                                             className="text-sm font-light text-gray-500 ring-0 w-full py-2 px-3 cursor-pointer bg-indigo-50 hover:bg-gray-50"
                                         >
                                             {skill.label}
                                         </li>
-                                    )
-                                ))}
-                            </ul>
+                                    ))}
+                                    
+                                    {/* If no matching skills found */}
+                                    {skills.filter((skill) => 
+                                        skill.label.toLowerCase().includes(filterSkillsInput.toLowerCase())
+                                    ).length === 0 && (
+                                        <li className="text-sm font-light text-gray-400 w-full py-2 px-3 text-center bg-gray-50">
+                                            No matching skills found
+                                        </li>
+                                    )}
+                                </ul>
                             )}
 
                             <div className="flex flex-wrap gap-2 mt-1">
@@ -641,6 +649,7 @@ function ImportantFields({ form }: ImportantFieldsProps) {
                                             className="font-light text-base rotate-45 cursor-pointer"
                                             onClick={() => {
                                                 setSelectedSkills((prev) => prev.filter((s) => s !== skill));
+                                                setSkills((prev) => [{ id: skill, label: skill }, ...prev]);
                                             }}
                                         >
                                             +
