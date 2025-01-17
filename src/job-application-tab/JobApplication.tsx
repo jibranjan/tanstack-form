@@ -34,6 +34,12 @@ function JobApplication({ form }: JobApplicationProps) {
         { id: 'expected-salary', name: 'Expected salary', isMandatory: false, section: 'other', allowChange: true },
         { id: 'notice-period', name: 'Notice period', isMandatory: false, section: 'other', allowChange: true },
         { id: 'languages-known', name: 'Languages known', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'awards', name: 'Awards', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'certifications', name: 'Certifications', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'projects', name: 'Projects', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'publications', name: 'Publications', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'linkedin-profile', name: 'LinkedIn profile', isMandatory: false, section: 'other', allowChange: true },
+        { id: 'github-profile', name: 'GitHub profile', isMandatory: false, section: 'other', allowChange: true },
     ]);
 
     return (
@@ -41,7 +47,7 @@ function JobApplication({ form }: JobApplicationProps) {
             {/* How candidates apply? */}
             <div>
                 <h2 className="text-gray-700 text-lg mb-3">How candidates apply?</h2>
-                <div className="flex flex-col gap-3 mb-3">
+                <div className="grid sm:grid-cols-2 gap-3 mb-3">
                     {applicationOptions.map((option) => (
                         <form.Field
                             key={option.id}
@@ -110,7 +116,7 @@ function JobApplication({ form }: JobApplicationProps) {
             {/* Screening Questions */}
             <div>
                 {/* We will have to use Soc here, so not done this part */}
-                <h2 className="text-gray-700 text-lg mb-3">Screening Questions</h2>
+                <h2 className="text-gray-700 text-lg mb-3">Custom Questions</h2>
             </div>
         </section>
     );
