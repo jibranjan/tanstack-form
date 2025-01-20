@@ -21,6 +21,10 @@ function CreateJobPostForm() {
             visaSponsorship: 'Not applicable',
             hasTravelRequirements: 'Yes',
             howCandidatesApply: 'job-posting-url',
+            locations: [""],
+            cities: [],
+            responsibilities: [""],
+            selectedSkills: [],
         },
         onSubmit: async ({ value }) => {
             // TODO: Submit the form
