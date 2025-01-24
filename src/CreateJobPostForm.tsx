@@ -6,9 +6,9 @@ import OtherFields from "./job-description-tab/OtherFields.tsx"
 import JobApplication from "./job-application-tab/JobApplication.tsx"
 import JobCreationTabs from "./JobCreationTabs.tsx"
 import JdUpload from "./job-description-tab/JdUpload.tsx"
-
+import Stages from "./stages-tab/Stages.tsx"
 function CreateJobPostForm() {
-    const allowJdUpload = true;
+    const allowJdUpload = false;
 
     const [activeTab, setActiveTab] = useState(0)
     const [uploadedTab, setUploadedTab] = useState(-1)
@@ -49,9 +49,9 @@ function CreateJobPostForm() {
                 }}
             >
                 {/* Important Fields */}
-                <div className="flex flex-col gap-10">
+                <div>
                     {activeTab === 0 && (
-                        <>
+                        <div className="flex flex-col gap-10">
                             {allowJdUpload && !jdSubmitted && (
                                 <JdUpload form={form} setJdSubmitted={setJdSubmitted} />
                             )}
@@ -66,11 +66,15 @@ function CreateJobPostForm() {
                                     </FieldAccordion>
                                 </>
                             )}
-                        </>
+                        </div>
                     )}
 
                     {activeTab === 1 && (
                         <JobApplication form={form} />
+                    )}
+
+                    {activeTab === 2 && (
+                        <Stages form={form} />
                     )}
 
                 </div>
