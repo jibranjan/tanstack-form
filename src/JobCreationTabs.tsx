@@ -89,7 +89,6 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                                         }
                                     } else {
                                         setActiveTab(index);
-                                        setUploadedTab(index);
                                     }
                                 }
                             }}
@@ -135,16 +134,17 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                     id="jc-next-btn"
                     className="text-sm rounded-lg w-20 px-4 py-1.5 sm:px-5 border bg-blue-900 border-blue-900 text-white active:scale-95 transition-all duration-150 ease-in-out"
                     onClick={() => {
-                        if (activeTab === 0) {
-                            if (validateFields()) {
-                                setActiveTab(activeTab + 1);
-                                setUploadedTab(activeTab);
-                            } else {
-                                alert('Please fill in all the fields in Important Fields section..');
-                            }
-                        } else {
-                            setUploadedTab(activeTab);
+                        if (activeTab === 0 && !validateFields()) {
+                            alert('Please fill in all the fields in Important Fields section..');
+                            return;
                         }
+                        if (activeTab === 2) {
+                            alert('Job post created successfully');
+                            setUploadedTab(activeTab);
+                            return;
+                        }
+                        setActiveTab(activeTab + 1);
+                        setUploadedTab(activeTab);
                     }}
                 >
                     {activeTab === 2 ? 'Finish' : 'Next'}
