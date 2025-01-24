@@ -44,7 +44,8 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                 hasEmptyFields = true;
             }
         })
-        return !hasEmptyFields;
+        // return !hasEmptyFields;
+        return true;
     };
 
     const TAB_CONTENT = [
@@ -66,7 +67,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
     ]
 
     return (
-        <section className="max-md:max-w-2xl md:max-lg:max-w-3xl w-full max-w-5xl max-lg:mx-auto flex flex-col xl:flex-row xl:justify-between max-xl:gap-5 xl:border-b xl:border-gray-300 max-md:px-5">
+        <section className="max-md:max-w-2xl md:max-lg:max-w-3xl w-full max-w-5xl max-lg:mx-auto flex flex-col xl:flex-row xl:justify-between max-xl:gap-5 xl:gap-2 xl:border-b xl:border-gray-300 max-md:px-5">
             <div className="flex flex-col lg:flex-row flex-1">
                 {TAB_CONTENT.map((tab, index) => (
                     <React.Fragment key={index}>
@@ -79,15 +80,16 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                             data-container-id={tab.containerId}
                             onClick={() => {
                                 if (activeTab !== index) {
-                                    if (activeTab === 0) {
+                                    if(activeTab < index) {
                                         if (validateFields()) {
                                             setActiveTab(index);
                                             setUploadedTab(activeTab);
                                         } else {
                                             alert('Please fill in all the fields in Important Fields section..');
                                         }
-                                    } else if (activeTab === 1) {
+                                    } else {
                                         setActiveTab(index);
+                                        setUploadedTab(index);
                                     }
                                 }
                             }}
@@ -123,10 +125,8 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                     id="jc-cancel-btn"
                     className="text-sm rounded-lg px-4 py-1.5 sm:px-5 border bg-white border-blue-900 text-blue-900 active:scale-95 transition-all duration-150 ease-in-out"
                     onClick={() => {
-                        if (activeTab === 1) {
-                            setActiveTab(activeTab - 1)
-                            setUploadedTab(-1);
-                        }
+                        setActiveTab(0)
+                        setUploadedTab(-1);
                     }}
                 >
                     Cancel
@@ -147,7 +147,7 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
                         }
                     }}
                 >
-                    {activeTab === 0 ? 'Next' : 'Finish'}
+                    {activeTab === 2 ? 'Finish' : 'Next'}
                 </button>
             </div>
         </section>
