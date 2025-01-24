@@ -40,7 +40,7 @@ function Stages({ form }: { form: any }) {
                         <div className="flex flex-col gap-3 bg-white rounded-lg shadow-md p-5">
                             <div>
                                 <h2 className="text-gray-700 text-lg">Stages</h2>
-                                <p className="text-gray-500 text-sm mb-3">The Applied, Hired and Rejected stages are mandatory. You man choose either one or both of the other two stages.</p>
+                                <p className="text-gray-500 text-sm mb-3">The Applied, Hired and Rejected stages are mandatory. You may choose either one or both of the other two stages.</p>
                             </div>
                             {stages.map((stage: any) => (
                                 <label 
