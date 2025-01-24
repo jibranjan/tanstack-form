@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RenderFieldSection from "./RenderFieldSection.tsx";
 
 interface JobApplicationProps {
@@ -57,10 +57,6 @@ function JobApplication({ form }: JobApplicationProps) {
     ]);
 
     const [customQuestions, setCustomQuestions] = useState<CustomQuestionType[]>([]);
-
-    useEffect(() => {
-        console.log('useEffect', customQuestions);
-    }, [customQuestions]);
 
     return (
         <section className="flex flex-col gap-5 bg-white rounded-lg px-5 py-3 shadow-md">
@@ -136,7 +132,6 @@ function JobApplication({ form }: JobApplicationProps) {
             {/* Screening Questions */}
             <div>
                 <h2 className="text-gray-700 text-lg mb-3">Custom Questions</h2>
-                {/* {console.log(customQuestions)} */}
 
                 {customQuestions.map((question, index) => (
                     <div 
