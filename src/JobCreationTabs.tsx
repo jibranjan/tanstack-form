@@ -57,16 +57,21 @@ const JobCreationTabs = ({ activeTab, setActiveTab, uploadedTab, setUploadedTab 
             title: "Job Application",
             description: "Job application details",
             containerId: "job-application"
+        },
+        {
+            title: "Stages",
+            description: "Stages of the job application",
+            containerId: "stages"
         }
     ]
 
     return (
-        <section className="max-md:max-w-2xl md:max-lg:max-w-3xl w-full max-w-5xl max-lg:mx-auto flex flex-col lg:flex-row lg:justify-between gap-5 lg:border-b lg:border-gray-300 max-md:px-5">
+        <section className="max-md:max-w-2xl md:max-lg:max-w-3xl w-full max-w-5xl max-lg:mx-auto flex flex-col xl:flex-row xl:justify-between max-xl:gap-5 xl:border-b xl:border-gray-300 max-md:px-5">
             <div className="flex flex-col lg:flex-row flex-1">
                 {TAB_CONTENT.map((tab, index) => (
                     <React.Fragment key={index}>
                         <div
-                            className={`w-full flex flex-row gap-3 items-center max-lg:border-b p-3 group tab-item cursor-pointer
+                            className={`w-full flex flex-row gap-3 items-center max-xl:border-b p-3 group tab-item cursor-pointer
                                 ${index === activeTab ? 'active-tab bg-white border-b-2 border-blue-900' : ''} 
                                 ${index <= uploadedTab ? 'bg-white border-b-2 border-green-500' : ''}
                                 ${index === 0 ? 'max-lg:rounded-t-lg' : ''} 
