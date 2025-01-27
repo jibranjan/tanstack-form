@@ -43,6 +43,7 @@ function JobApplication({ form }: JobApplicationProps) {
 
     const [fields, setFields] = useState<FieldType[]>([
         // Other Fields
+        { id: 'phone-number', name: 'Phone number', isMandatory: false, section: 'other', allowChange: true },
         { id: 'skills', name: 'Skills', isMandatory: false, section: 'other', allowChange: true },
         { id: 'cover-letter', name: 'Cover letter', isMandatory: false, section: 'other', allowChange: true },
         { id: 'expected-salary', name: 'Expected salary', isMandatory: false, section: 'other', allowChange: true },

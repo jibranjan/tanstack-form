@@ -1,6 +1,8 @@
 import { useForm } from "@tanstack/react-form"
-import CandCvUpload from "./CandCvUpload"
 import { useState } from "react"
+import CandCvUpload from "./CandCvUpload.tsx"
+import CandJobAppForm from "./CandJobAppForm.tsx"
+
 function CandJobApp() {
 
     const [cvSubmitted, setCvSubmitted] = useState(false);
@@ -30,9 +32,7 @@ function CandJobApp() {
                     />
                 )}
                 {cvSubmitted && (
-                    <div>
-                        <h1>CV Submitted</h1>
-                    </div>
+                    <CandJobAppForm />
                 )}
             </form>
         </>
