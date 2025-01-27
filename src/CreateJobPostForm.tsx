@@ -48,7 +48,6 @@ function CreateJobPostForm() {
                     form.handleSubmit();
                 }}
             >
-                {/* Important Fields */}
                 <div>
                     {activeTab === 0 && (
                         <div className="flex flex-col gap-10">
