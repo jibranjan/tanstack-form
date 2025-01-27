@@ -8,7 +8,13 @@ interface CandCvUploadProps {
 function CandCvUpload({ form, setCvSubmitted }: CandCvUploadProps) {
     const [cvProvided, setCvProvided] = useState(false);
     const [uploadedCvFile, setUploadedCvFile] = useState<File | null>(null);
+    const [activeInput, setActiveInput] = useState<'file' | 'link' | 'paste' | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const clearActiveInput = () => {
+        setActiveInput(null);
+        setCvProvided(false);
+    };
 
     return (
         <section className="flex flex-col gap-3 bg-white p-3 rounded-lg shadow-lg">
@@ -28,19 +34,23 @@ function CandCvUpload({ form, setCvSubmitted }: CandCvUploadProps) {
                             return (
                                 <>
                                     <label
-                                        className="flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out cursor-pointer"
+                                        className={`flex items-center gap-2 bg-indigo-200 border-indigo-200 text-indigo-900 text-sm px-3 py-2 rounded-lg active:scale-95 transition-all duration-150 ease-in-out cursor-pointer ${ cvProvided && activeInput !== 'file' ? "cursor-not-allowed" : ""}`}
                                     >
                                         <input
                                             ref={fileInputRef}
                                             id={field.name}
                                             name={field.name}
                                             type="file"
-                                            className="hidden"
+                                            className="hidden disabled:cursor-not-allowed"
                                             accept=".pdf,.doc,.docx,.png,.jpeg,.jpg"
+                                            disabled={activeInput !== null && activeInput !== 'file'}
                                             onChange={(e) => {
-                                                field.handleChange(e.target.files);
-                                                setCvProvided(true);
-                                                setUploadedCvFile(e.target.files?.[0] || null);
+                                                if (e.target.files?.[0]) {
+                                                    field.handleChange(e.target.files);
+                                                    setCvProvided(true);
+                                                    setUploadedCvFile(e.target.files[0]);
+                                                    setActiveInput('file');
+                                                }
                                             }}
                                             onBlur={field.handleBlur}
                                         />
@@ -76,13 +86,19 @@ function CandCvUpload({ form, setCvSubmitted }: CandCvUploadProps) {
                                     id={field.name}
                                     name={field.name}
                                     value={field.state.value || ""}
+                                    disabled={activeInput !== null && activeInput !== 'link'}
                                     onBlur={field.handleBlur}
                                     onChange={(e) => {
                                         field.handleChange(e.target.value);
-                                        setCvProvided(true);
+                                        if (e.target.value) {
+                                            setCvProvided(true);
+                                            setActiveInput('link');
+                                        } else {
+                                            clearActiveInput();
+                                        }
                                     }}
                                     type="url"
-                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg req-input-field"
+                                    className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg disabled:cursor-not-allowed"
                                     placeholder="https://cv.example.co/post=1"
                                 />
                             )
@@ -113,7 +129,7 @@ function CandCvUpload({ form, setCvSubmitted }: CandCvUploadProps) {
                                     fileInputRef.current.value = '';
                                 }
                                 setUploadedCvFile(null);
-                                setCvProvided(false);
+                                clearActiveInput();
                             }}
                         >
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -134,11 +150,17 @@ function CandCvUpload({ form, setCvSubmitted }: CandCvUploadProps) {
                                 name={field.name}
                                 value={field.state.value || ""}
                                 onBlur={field.handleBlur}
+                                disabled={activeInput !== null && activeInput !== 'paste'}
                                 onChange={(e) => {
                                     field.handleChange(e.target.value);
-                                    setCvProvided(true);
+                                    if (e.target.value) {
+                                        setCvProvided(true);
+                                        setActiveInput('paste');
+                                    } else {
+                                        clearActiveInput();
+                                    }
                                 }}
-                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg"
+                                className="text-sm font-light text-gray-500 ring-0 border border-gray-300 w-full py-2 px-3 rounded-lg disabled:cursor-not-allowed"
                                 placeholder="Paste your CV here..."
                             />
                         )
