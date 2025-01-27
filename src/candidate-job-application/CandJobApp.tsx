@@ -23,10 +23,17 @@ function CandJobApp() {
                     form.handleSubmit();
                 }}
             >
-                <CandCvUpload 
-                    form={form} 
-                    setCvSubmitted={setCvSubmitted} 
-                />
+                {!cvSubmitted && (
+                    <CandCvUpload 
+                        form={form} 
+                        setCvSubmitted={setCvSubmitted} 
+                    />
+                )}
+                {cvSubmitted && (
+                    <div>
+                        <h1>CV Submitted</h1>
+                    </div>
+                )}
             </form>
         </>
     )
